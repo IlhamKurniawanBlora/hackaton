@@ -1,7 +1,10 @@
 // src/pages/SimulationDetailPage.jsx
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeftIcon, PlayIcon, DocumentCheckIcon, ExternalLinkIcon } from '@heroicons/react/24/outline'; // Tambah ExternalLinkIcon
+// --- PERBAIKAN DI SINI ---
+// Ganti ExternalLinkIcon dengan ArrowTopRightOnSquareIcon
+import { ArrowLeftIcon, PlayIcon, DocumentCheckIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'; 
+// --- AKHIR PERBAIKAN ---
 
 // ASUMSI: Data simulasi ini sekarang akan diletakkan di file terpisah
 // Misalnya, src/data/simulationsData.js
@@ -13,7 +16,6 @@ const simulationsData = [
     description: 'Eksperimen dengan dosis radiasi berbeda untuk melihat efek pada pertumbuhan dan hasil benih tanaman X.',
     content: 'Dalam simulasi ini, Anda akan dapat memilih jenis benih, mengatur dosis radiasi (rendah, sedang, tinggi), dan mengamati perkecambahan serta pertumbuhan awal dalam jangka waktu virtual. Perhatikan bagaimana dosis yang berbeda dapat mempengaruhi vigor benih dan resistensi terhadap kondisi lingkungan tertentu. Tujuan simulasi ini adalah untuk membantu Anda memahami konsep optimasi dosis radiasi untuk hasil terbaik.',
     link: 'https://www.google.com', // GANTI DENGAN LINK SIMULASI ASLI DARI WEB LAIN
-    // Contoh lain: 'https://pusteknukes.brin.go.id/simulasi/iradiasi-benih-optimal',
     duration: '30 Menit', // Tambahkan jika belum ada
     imageUrl: '/assets/images/simulation-1.jpg' // Tambahkan jika belum ada
   },
@@ -95,14 +97,14 @@ function SimulationDetailPage() {
         <p className="module-section-text">{simulation.content}</p>
 
         <div className="simulation-actions">
-          {simulation.link && ( // Tampilkan tombol Mulai Simulasi jika ada link
+          {simulation.link && (
             <a
               href={simulation.link}
               target="_blank"
               rel="noopener noreferrer"
               className="button button-primary start-simulation-button"
             >
-              <PlayIcon className="button-icon" /> Mulai Simulasi (Buka di Tab Baru) <ExternalLinkIcon className="button-icon ml-1" /> {/* Tambah ikon */}
+              <PlayIcon className="button-icon" /> Mulai Simulasi (Buka di Tab Baru) <ArrowTopRightOnSquareIcon className="button-icon ml-1" /> {/* --- GANTI PENGGUNAAN IKON DI SINI --- */}
             </a>
           )}
           <button
