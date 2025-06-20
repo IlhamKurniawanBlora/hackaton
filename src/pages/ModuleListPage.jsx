@@ -7,7 +7,7 @@ function ModulesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-blue-600 text-white">
+      <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white">
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <div className="flex justify-center mb-4">

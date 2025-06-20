@@ -220,7 +220,7 @@ function SimulationPage() {
 
         {/* Call to Action */}
         <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-green-600 to-orange-600 rounded-3xl p-8 text-white">
+          <div className="bg-gradient-to-r from-green-600 to-green-800 rounded-3xl p-8 text-white">
             <h2 className="text-2xl font-bold mb-4">
               Siap Memulai Perjalanan Pembelajaran?
             </h2>
