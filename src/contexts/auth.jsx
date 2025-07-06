@@ -1,5 +1,6 @@
 // src/contexts/auth.jsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '~/utils/supabase';
 
 const AuthContext = createContext({});
@@ -16,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
+  const navigate = useNavigate();
 
   // Get user profile data
   const getUserProfile = async (userId) => {
@@ -38,6 +40,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Handle redirect based on user role
+  const handleRoleBasedRedirect = (userProfile) => {
+    if (userProfile?.is_admin) {
+      navigate('/admin');
+    } else {
+      navigate('/');
+    }
+  };
+
   // Sign up function
   const signUp = async (email, password, userData = {}) => {
     try {
@@ -52,6 +63,12 @@ export const AuthProvider = ({ children }) => {
       
       if (error) {
         throw error;
+      }
+      
+      // If sign up is successful and user is confirmed, get profile and redirect
+      if (data.user && !data.user.email_confirmed_at) {
+        // User needs to confirm email first
+        return { data, error: null, needsConfirmation: true };
       }
       
       return { data, error: null };
@@ -76,6 +93,15 @@ export const AuthProvider = ({ children }) => {
         throw error;
       }
       
+      // If sign in is successful, get profile and redirect
+      if (data.user) {
+        const userProfile = await getUserProfile(data.user.id);
+        setProfile(userProfile);
+        
+        // Redirect based on admin status
+        handleRoleBasedRedirect(userProfile);
+      }
+      
       return { data, error: null };
     } catch (error) {
       console.error('Error signing in:', error);
@@ -97,6 +123,10 @@ export const AuthProvider = ({ children }) => {
       
       setUser(null);
       setProfile(null);
+      
+      // Redirect to login page or home page
+      navigate('/login');
+      
       return { error: null };
     } catch (error) {
       console.error('Error signing out:', error);
@@ -173,6 +203,11 @@ export const AuthProvider = ({ children }) => {
     return user !== null;
   };
 
+  // Check if user is admin
+  const isAdmin = () => {
+    return profile?.is_admin === true;
+  };
+
   // Get user display name
   const getUserDisplayName = () => {
     if (profile?.full_name) {
@@ -193,6 +228,31 @@ export const AuthProvider = ({ children }) => {
       return profile.avatar_url;
     }
     return null;
+  };
+
+  // Check access permission for admin routes
+  const checkAdminAccess = () => {
+    if (!isAuthenticated()) {
+      navigate('/login');
+      return false;
+    }
+    
+    if (!isAdmin()) {
+      navigate('/');
+      return false;
+    }
+    
+    return true;
+  };
+
+  // Check access permission for protected routes
+  const checkAuthAccess = () => {
+    if (!isAuthenticated()) {
+      navigate('/login');
+      return false;
+    }
+    
+    return true;
   };
 
   useEffect(() => {
@@ -223,6 +283,11 @@ export const AuthProvider = ({ children }) => {
         if (session?.user) {
           const userProfile = await getUserProfile(session.user.id);
           setProfile(userProfile);
+          
+          // Only redirect on SIGNED_IN event to avoid unnecessary redirects
+          if (event === 'SIGNED_IN') {
+            handleRoleBasedRedirect(userProfile);
+          }
         } else {
           setProfile(null);
         }
@@ -246,9 +311,13 @@ export const AuthProvider = ({ children }) => {
     resetPassword,
     updatePassword,
     isAuthenticated,
+    isAdmin,
     getUserDisplayName,
     getUserAvatarUrl,
-    getUserProfile
+    getUserProfile,
+    checkAdminAccess,
+    checkAuthAccess,
+    handleRoleBasedRedirect
   };
 
   return (
