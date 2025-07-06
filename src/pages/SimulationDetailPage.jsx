@@ -1,361 +1,543 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  ArrowLeft, 
   Play, 
-  Award, 
-  ExternalLink,
-  Clock,
-  GraduationCap,
+  Pause, 
+  RotateCcw, 
+  Settings,
+  TrendingUp,
+  Shield,
+  Leaf,
+  Zap,
+  ChevronLeft,
+  Info,
+  BarChart3,
+  Activity,
   Target,
-  CheckCircle,
-  BookOpen,
-  Users,
-  Star,
-  Download,
-  Share2
+  Clock,
+  CheckCircle2,
+  AlertTriangle
 } from 'lucide-react';
 
-// Data simulasi
-const simulationsData = [
+// Data tanaman dengan gambar yang sesuai
+const plantTypes = [
   {
-    id: 'sim-iradiasi-benih-optimal',
-    title: 'Simulasi Iradiasi Benih Optimal',
-    description: 'Eksperimen dengan dosis radiasi berbeda untuk melihat efek pada pertumbuhan dan hasil benih tanaman X.',
-    content: 'Dalam simulasi ini, Anda akan dapat memilih jenis benih, mengatur dosis radiasi (rendah, sedang, tinggi), dan mengamati perkecambahan serta pertumbuhan awal dalam jangka waktu virtual. Perhatikan bagaimana dosis yang berbeda dapat mempengaruhi vigor benih dan resistensi terhadap kondisi lingkungan tertentu. Tujuan simulasi ini adalah untuk membantu Anda memahami konsep optimasi dosis radiasi untuk hasil terbaik.',
-    link: 'https://www.google.com',
-    duration: '30 Menit',
-    imageUrl: '/assets/images/simulation-1.jpg',
-    level: 'Pemula',
-    objectives: [
-      'Memahami efek dosis radiasi pada perkecambahan benih',
-      'Menganalisis pertumbuhan tanaman dengan variasi dosis',
-      'Menentukan dosis optimal untuk hasil maksimal'
-    ],
-    rating: 4.8,
-    participants: '2.1k',
-    difficulty: 'Mudah'
+    id: 'padi',
+    name: 'Padi',
+    image: '../../public/simulations/padi.png',
+    baseYield: 5.2,
+    pestResistance: 60,
+    growthTime: 120,
+    optimalRadiation: 25
   },
   {
-    id: 'sim-pengawetan-makanan-stroberi',
-    title: 'Simulasi Pengawetan Makanan (Stroberi)',
-    description: 'Amati efek iradiasi pada masa simpan stroberi dibandingkan dengan metode konvensional.',
-    content: 'Simulasi ini memvisualisasikan perbedaan masa simpan stroberi yang diiradiasi dan yang tidak diiradiasi. Anda akan melihat grafik pertumbuhan mikroba dan perubahan kualitas (misal: busuk, perubahan warna) seiring waktu. Ini akan memberikan gambaran jelas tentang efektivitas iradiasi sebagai metode pengawetan pangan.',
-    link: 'https://www.bing.com',
-    duration: '45 Menit',
-    imageUrl: '/assets/images/simulation-2.jpg',
-    level: 'Menengah',
-    objectives: [
-      'Membandingkan metode pengawetan konvensional vs iradiasi',
-      'Menganalisis pertumbuhan mikroba pada makanan',
-      'Mengevaluasi efektivitas iradiasi untuk pengawetan'
-    ],
-    rating: 4.6,
-    participants: '1.8k',
-    difficulty: 'Sedang'
+    id: 'jagung',
+    name: 'Jagung',
+    image: '../../public/simulations/jagung.png',
+    baseYield: 7.8,
+    pestResistance: 45,
+    growthTime: 90,
+    optimalRadiation: 30
   },
   {
-    id: 'sim-analisis-penyerapan-hara',
-    title: 'Analisis Penyerapan Hara Tanah dengan Isotop',
-    description: 'Pahami bagaimana tanaman menyerap nutrisi dari tanah menggunakan pelacak isotop.',
-    content: 'Simulasi interaktif ini akan menunjukkan pergerakan nutrisi berlabel isotop di dalam tanah dan bagaimana akar tanaman menyerapnya. Anda bisa mengubah jenis tanah, ketersediaan air, dan jenis pupuk untuk melihat dampaknya pada efisiensi penyerapan nutrisi, sebuah konsep penting dalam pertanian presisi.',
-    link: 'https://www.yahoo.com',
-    duration: '60 Menit',
-    imageUrl: '/assets/images/simulation-3.jpg',
-    level: 'Lanjutan',
-    objectives: [
-      'Memahami pergerakan nutrisi dalam tanah',
-      'Menganalisis efisiensi penyerapan hara tanaman',
-      'Menerapkan konsep pertanian presisi'
-    ],
-    rating: 4.9,
-    participants: '1.2k',
-    difficulty: 'Menantang'
+    id: 'kedelai',
+    name: 'Kedelai',
+    image: '../../public/simulations/kedelai.png',
+    baseYield: 3.5,
+    pestResistance: 70,
+    growthTime: 85,
+    optimalRadiation: 20
   },
   {
-    id: 'sim-manajemen-limbah-radioaktif',
-    title: 'Manajemen Limbah Radioaktif Pertanian',
-    description: 'Pelajari proses penanganan dan penyimpanan limbah radioaktif dari aplikasi pertanian.',
-    content: 'Simulasi ini akan membimbing Anda melalui tahapan pengelolaan limbah radioaktif tingkat rendah yang dihasilkan dari aplikasi pertanian (misalnya, dari alat ukur isotop). Anda akan belajar tentang klasifikasi limbah, metode dekomposisi atau pengemasan, hingga penyimpanan akhir yang aman sesuai dengan protokol internasional.',
-    link: 'https://www.duckduckgo.com',
-    duration: '50 Menit',
-    imageUrl: '/assets/images/simulation-4.jpg',
-    level: 'Lanjutan',
-    objectives: [
-      'Memahami klasifikasi limbah radioaktif pertanian',
-      'Menguasai prosedur penanganan yang aman',
-      'Menerapkan protokol penyimpanan internasional'
-    ],
-    rating: 4.7,
-    participants: '890',
-    difficulty: 'Menantang'
-  },
+    id: 'tomat',
+    name: 'Tomat',
+    image: '../../public/simulations/tomat.png',
+    baseYield: 45.0,
+    pestResistance: 55,
+    growthTime: 75,
+    optimalRadiation: 35
+  }
 ];
 
-const levelColors = {
-  'Pemula': 'bg-green-100 text-green-800 border-green-200',
-  'Menengah': 'bg-orange-100 text-orange-800 border-orange-200',
-  'Lanjutan': 'bg-red-100 text-red-800 border-red-200',
-};
-
-const difficultyColors = {
-  'Mudah': 'text-green-600',
-  'Sedang': 'text-orange-600',
-  'Menantang': 'text-red-600',
+// Simulasi hasil berdasarkan dosis radiasi
+const calculateResults = (plant, radiationDose) => {
+  const optimalDose = plant.optimalRadiation;
+  const deviation = Math.abs(radiationDose - optimalDose);
+  
+  // Efisiensi berdasarkan kedekatan dengan dosis optimal
+  const efficiency = Math.max(0.3, 1 - (deviation / optimalDose) * 0.7);
+  
+  // Perhitungan hasil
+  const yieldIncrease = efficiency * 100;
+  const finalYield = plant.baseYield * (1 + yieldIncrease / 100);
+  
+  // Resistensi hama
+  const pestResistanceBonus = efficiency * 40;
+  const finalPestResistance = Math.min(95, plant.pestResistance + pestResistanceBonus);
+  
+  // Waktu pertumbuhan (radiasi optimal mengurangi waktu)
+  const growthReduction = efficiency * 0.2;
+  const finalGrowthTime = Math.max(plant.growthTime * 0.6, plant.growthTime * (1 - growthReduction));
+  
+  return {
+    yieldIncrease: yieldIncrease.toFixed(1),
+    finalYield: finalYield.toFixed(1),
+    pestResistance: finalPestResistance.toFixed(1),
+    growthTime: Math.round(finalGrowthTime),
+    efficiency: (efficiency * 100).toFixed(1),
+    mutation: radiationDose > optimalDose * 1.5 ? 'Berlebihan' : 
+              radiationDose < optimalDose * 0.5 ? 'Tidak Optimal' : 'Optimal'
+  };
 };
 
 function SimulationDetailPage() {
-  // Simulasi menggunakan ID pertama sebagai default
-  const simulationId = 'sim-iradiasi-benih-optimal';
-  const simulation = simulationsData.find(s => s.id === simulationId);
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [selectedPlant, setSelectedPlant] = useState(plantTypes[0]);
+  const [radiationDose, setRadiationDose] = useState(25);
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [simulationProgress, setSimulationProgress] = useState(0);
+  const [showResults, setShowResults] = useState(false);
+  const [results, setResults] = useState(null);
+  const [simulationHistory, setSimulationHistory] = useState([]);
 
-  if (!simulation) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-orange-50 flex items-center justify-center">
-        <div className="text-center bg-white p-8 rounded-2xl shadow-lg">
-          <h1 className="text-2xl font-bold mb-4 text-gray-900">Simulasi Tidak Ditemukan</h1>
-          <p className="text-gray-600 mb-8">
-            Maaf, simulasi yang Anda cari tidak tersedia.
-          </p>
-          <button 
-            onClick={() => window.history.back()}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transition-all"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Kembali ke Daftar Simulasi
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  const handleCompleteSimulation = () => {
-    const userName = prompt("Masukkan nama lengkap Anda untuk sertifikat:");
-
-    if (userName && userName.trim()) {
-      setIsCompleted(true);
-      // Simulasi download sertifikat
-      setTimeout(() => {
-        alert(`Sertifikat untuk ${userName} telah berhasil dibuat!`);
-      }, 1000);
-    } else {
-      alert("Nama diperlukan untuk menerbitkan sertifikat.");
+  // Simulasi progress
+  useEffect(() => {
+    let interval;
+    if (isSimulating) {
+      interval = setInterval(() => {
+        setSimulationProgress(prev => {
+          if (prev >= 100) {
+            setIsSimulating(false);
+            setShowResults(true);
+            const newResults = calculateResults(selectedPlant, radiationDose);
+            setResults(newResults);
+            
+            // Tambah ke history
+            const newHistory = {
+              id: Date.now(),
+              plant: selectedPlant,
+              dose: radiationDose,
+              timestamp: new Date().toLocaleTimeString(),
+              results: newResults
+            };
+            setSimulationHistory(prev => [newHistory, ...prev.slice(0, 4)]);
+            
+            return 100;
+          }
+          return prev + 2;
+        });
+      }, 100);
     }
+    return () => clearInterval(interval);
+  }, [isSimulating, selectedPlant, radiationDose]);
+
+  const startSimulation = () => {
+    setIsSimulating(true);
+    setSimulationProgress(0);
+    setShowResults(false);
+    setResults(null);
+  };
+
+  const resetSimulation = () => {
+    setIsSimulating(false);
+    setSimulationProgress(0);
+    setShowResults(false);
+    setResults(null);
+    setRadiationDose(25);
+  };
+
+  const getRadiationColor = (dose) => {
+    if (dose < 15) return 'text-green-600';
+    if (dose < 30) return 'text-yellow-600';
+    if (dose < 45) return 'text-orange-600';
+    return 'text-red-600';
+  };
+
+  const getRadiationBg = (dose) => {
+    if (dose < 15) return 'bg-green-100';
+    if (dose < 30) return 'bg-yellow-100';
+    if (dose < 45) return 'bg-orange-100';
+    return 'bg-red-100';
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-orange-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Navigation */}
-        <button 
-          onClick={() => window.history.back()}
-          className="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-medium mb-8 transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          Kembali ke Daftar Simulasi
-        </button>
-
-        {/* Hero Section */}
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden mb-8">
-          <div className="relative h-64 bg-gradient-to-r from-green-600 to-orange-600">
-            <div className="absolute inset-0 bg-black/20"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center text-white">
-                <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-4">
-                  <BookOpen className="w-4 h-4" />
-                  Simulasi Interaktif
-                </div>
-                <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                  {simulation.title}
-                </h1>
-                <p className="text-green-100 max-w-2xl mx-auto">
-                  {simulation.description}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Stats Bar */}
-          <div className="p-6 border-b border-gray-100">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <span className="font-semibold text-gray-900">{simulation.rating}</span>
-                  <span className="text-gray-600">/5</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-gray-400" />
-                  <span className="text-gray-600">{simulation.participants} peserta</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-gray-400" />
-                  <span className="text-gray-600">{simulation.duration}</span>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <span className={`px-3 py-1 rounded-full text-sm font-semibold border ${levelColors[simulation.level]}`}>
-                  {simulation.level}
-                </span>
-                <span className={`font-medium ${difficultyColors[simulation.difficulty]}`}>
-                  {simulation.difficulty}
-                </span>
-              </div>
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b border-gray-200">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => window.history.back()}
+              className="flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              Kembali
+            </button>
+            <div class="ml-3">
+              <h1 className="text-2xl font-bold text-gray-900">
+                Optimalisasi Hasil Pertanian melalui Teknologi Radiasi
+              </h1>
+              <p className="text-gray-600">Simulasi Interaktif - Eksperimen Virtual</p>
             </div>
           </div>
         </div>
+      </div>
 
+      <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Description */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <BookOpen className="w-6 h-6 text-green-600" />
-                Deskripsi Simulasi
-              </h2>
-              <p className="text-gray-700 leading-relaxed">
-                {simulation.content}
-              </p>
-            </div>
-
-            {/* Learning Objectives */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <Target className="w-6 h-6 text-orange-600" />
-                Tujuan Pembelajaran
-              </h2>
-              <div className="space-y-4">
-                {simulation.objectives.map((objective, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                    </div>
-                    <p className="text-gray-700">{objective}</p>
-                  </div>
-                ))}
+          {/* Panel Kontrol */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Settings className="w-6 h-6 text-green-600" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900">Panel Kontrol</h2>
               </div>
-            </div>
 
-            {/* Instructions */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">📋 Petunjuk Pelaksanaan</h3>
-              <ol className="space-y-2 text-gray-700">
-                <li className="flex items-start gap-2">
-                  <span className="font-semibold text-blue-600">1.</span>
-                  Klik "Mulai Simulasi" untuk membuka simulasi di tab baru
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="font-semibold text-blue-600">2.</span>
-                  Ikuti semua instruksi dalam simulasi dengan cermat
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="font-semibold text-blue-600">3.</span>
-                  Setelah selesai, kembali ke halaman ini
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="font-semibold text-blue-600">4.</span>
-                  Klik "Selesaikan Simulasi" untuk mendapatkan sertifikat
-                </li>
-              </ol>
-            </div>
-          </div>
+              {/* Pilihan Tanaman */}
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  Pilih Jenis Tanaman
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  {plantTypes.map(plant => (
+                    <button
+                      key={plant.id}
+                      onClick={() => setSelectedPlant(plant)}
+                      className={`p-3 rounded-xl border-2 transition-all ${
+                        selectedPlant.id === plant.id 
+                          ? 'border-green-500 bg-green-50 text-green-700' 
+                          : 'border-gray-200 hover:border-green-300'
+                      }`}
+                    >
+                      <div className="w-full h-16 bg-gray-200 rounded-lg mb-2 overflow-hidden">
+                        <img 
+                          src={plant.image} 
+                          alt={plant.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                        <div className="w-full h-full flex items-center justify-center" style={{display: 'none'}}>
+                          <Leaf className="w-8 h-8 text-gray-400" />
+                        </div>
+                      </div>
+                      <div className="text-sm font-medium">{plant.name}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Action Card */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8">
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Mulai Simulasi</h3>
-              
-              <div className="space-y-4">
-                <a
-                  href={simulation.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
-                >
-                  <Play className="w-5 h-5" />
-                  Mulai Simulasi
-                  <ExternalLink className="w-4 h-4" />
-                </a>
+              {/* Dosis Radiasi */}
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  Dosis Radiasi (Gy)
+                </label>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm text-gray-600">0</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="60"
+                      value={radiationDose}
+                      onChange={(e) => setRadiationDose(Number(e.target.value))}
+                      className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                      disabled={isSimulating}
+                    />
+                    <span className="text-sm text-gray-600">60</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className={`px-3 py-1 rounded-full text-sm font-semibold ${getRadiationBg(radiationDose)}`}>
+                      <span className={getRadiationColor(radiationDose)}>
+                        {radiationDose} Gy
+                      </span>
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      Optimal: {selectedPlant.optimalRadiation} Gy
+                    </div>
+                  </div>
+                </div>
+              </div>
 
+              {/* Tombol Kontrol */}
+              <div className="space-y-3">
                 <button
-                  onClick={handleCompleteSimulation}
-                  className={`w-full py-4 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
-                    isCompleted 
-                      ? 'bg-green-100 text-green-800 border-2 border-green-200'
-                      : 'bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'
-                  }`}
-                  disabled={isCompleted}
+                  onClick={startSimulation}
+                  disabled={isSimulating}
+                  className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  {isCompleted ? (
+                  {isSimulating ? (
                     <>
-                      <CheckCircle className="w-5 h-5" />
-                      Simulasi Selesai
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      Memproses...
                     </>
                   ) : (
                     <>
-                      <Award className="w-5 h-5" />
-                      Selesaikan & Dapatkan Sertifikat
+                      <Play className="w-5 h-5" />
+                      Mulai Simulasi
                     </>
                   )}
                 </button>
-
-                {isCompleted && (
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-all flex items-center justify-center gap-2">
-                    <Download className="w-4 h-4" />
-                    Download Sertifikat
-                  </button>
-                )}
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-gray-100">
-                <button className="w-full flex items-center justify-center gap-2 text-gray-600 hover:text-gray-800 transition-colors">
-                  <Share2 className="w-4 h-4" />
-                  Bagikan Simulasi
+                
+                <button
+                  onClick={resetSimulation}
+                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-6 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
+                >
+                  <RotateCcw className="w-5 h-5" />
+                  Reset
                 </button>
               </div>
             </div>
 
-            {/* Progress Card */}
-            <div className="bg-gradient-to-br from-green-100 to-orange-100 rounded-2xl p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Progress Anda</h3>
+            {/* Info Tanaman dengan Gambar */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Info className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900">Info Tanaman</h3>
+              </div>
+
+              {/* Gambar Tanaman Terpilih */}
+              <div className="mb-4">
+                <div className="w-full h-32 bg-gray-200 rounded-lg overflow-hidden">
+                  <img 
+                    src={selectedPlant.image} 
+                    alt={selectedPlant.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div className="w-full h-full flex items-center justify-center bg-gray-200" style={{display: 'none'}}>
+                    <Leaf className="w-16 h-16 text-gray-400" />
+                  </div>
+                </div>
+                <p className="text-center font-semibold text-gray-900 mt-2">{selectedPlant.name}</p>
+              </div>
+              
               <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-700">Simulasi Selesai</span>
-                  <span className="font-semibold text-green-600">
-                    {isCompleted ? '1/1' : '0/1'}
-                  </span>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Hasil Awal:</span>
+                  <span className="font-semibold">{selectedPlant.baseYield} ton/ha</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-green-500 to-orange-500 h-2 rounded-full transition-all duration-500"
-                    style={{ width: isCompleted ? '100%' : '0%' }}
-                  ></div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Resistensi Hama:</span>
+                  <span className="font-semibold">{selectedPlant.pestResistance}%</span>
                 </div>
-                <p className="text-sm text-gray-600 text-center">
-                  {isCompleted ? 'Selamat! Anda telah menyelesaikan simulasi.' : 'Mulai simulasi untuk melanjutkan.'}
-                </p>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Masa Tumbuh:</span>
+                  <span className="font-semibold">{selectedPlant.growthTime} hari</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Dosis Optimal:</span>
+                  <span className="font-semibold text-green-600">{selectedPlant.optimalRadiation} Gy</span>
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Certificate Preview */}
-            {isCompleted && (
-              <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-6 border border-yellow-200">
-                <div className="text-center">
-                  <Award className="w-12 h-12 text-yellow-600 mx-auto mb-3" />
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Sertifikat Tersedia!</h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Anda telah berhasil menyelesaikan simulasi dan berhak mendapatkan sertifikat.
-                  </p>
-                  <div className="bg-white rounded-lg p-3 border-2 border-dashed border-yellow-300">
-                    <div className="text-xs text-gray-500 mb-1">Simulasi:</div>
-                    <div className="font-semibold text-gray-900 text-sm">{simulation.title}</div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      Diselesaikan: {new Date().toLocaleDateString('id-ID')}
+          {/* Area Visualisasi */}
+          <div className="lg:col-span-2">
+            {/* Progress Bar */}
+            {(isSimulating || showResults) && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-orange-100 rounded-lg">
+                    <Activity className="w-6 h-6 text-orange-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900">
+                    {isSimulating ? 'Simulasi Berlangsung' : 'Simulasi Selesai'}
+                  </h3>
+                </div>
+                
+                <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
+                  <div 
+                    className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-200"
+                    style={{ width: `${simulationProgress}%` }}
+                  ></div>
+                </div>
+                
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>Progress: {simulationProgress}%</span>
+                  <span>{isSimulating ? 'Memproses mutasi genetik...' : 'Selesai'}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Hasil Simulasi dengan Gambar */}
+            {showResults && results && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-green-100 rounded-lg">
+                    <BarChart3 className="w-6 h-6 text-green-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900">Hasil Simulasi</h3>
+                </div>
+
+                {/* Header dengan Gambar Tanaman */}
+                <div className="flex items-center gap-4 mb-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl">
+                  <div className="w-20 h-20 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+                    <img 
+                      src={selectedPlant.image} 
+                      alt={selectedPlant.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200" style={{display: 'none'}}>
+                      <Leaf className="w-8 h-8 text-gray-400" />
                     </div>
                   </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-gray-900">{selectedPlant.name}</h4>
+                    <p className="text-gray-600">Dosis Radiasi: {radiationDose} Gy</p>
+                    <p className="text-sm text-gray-500">Efisiensi: {results.efficiency}%</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Metrik Hasil */}
+                  <div className="space-y-4">
+                    <div className="p-4 bg-green-50 rounded-xl">
+                      <div className="flex items-center gap-2 mb-2">
+                        <TrendingUp className="w-5 h-5 text-green-600" />
+                        <span className="font-semibold text-green-800">Peningkatan Hasil</span>
+                      </div>
+                      <div className="text-2xl font-bold text-green-600">
+                        +{results.yieldIncrease}%
+                      </div>
+                      <div className="text-sm text-green-700">
+                        {results.finalYield} ton/ha
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-blue-50 rounded-xl">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Shield className="w-5 h-5 text-blue-600" />
+                        <span className="font-semibold text-blue-800">Resistensi Hama</span>
+                      </div>
+                      <div className="text-2xl font-bold text-blue-600">
+                        {results.pestResistance}%
+                      </div>
+                      <div className="text-sm text-blue-700">
+                        Peningkatan signifikan
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-orange-50 rounded-xl">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Clock className="w-5 h-5 text-orange-600" />
+                        <span className="font-semibold text-orange-800">Masa Tumbuh</span>
+                      </div>
+                      <div className="text-2xl font-bold text-orange-600">
+                        {results.growthTime} hari
+                      </div>
+                      <div className="text-sm text-orange-700">
+                        Lebih cepat dari normal
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Status Mutasi */}
+                  <div className="space-y-4">
+                    <div className={`p-4 rounded-xl ${
+                      results.mutation === 'Optimal' ? 'bg-green-50' :
+                      results.mutation === 'Berlebihan' ? 'bg-red-50' : 'bg-yellow-50'
+                    }`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className={`p-1 rounded-full ${
+                          results.mutation === 'Optimal' ? 'bg-green-200' :
+                          results.mutation === 'Berlebihan' ? 'bg-red-200' : 'bg-yellow-200'
+                        }`}>
+                          {results.mutation === 'Optimal' ? 
+                            <CheckCircle2 className="w-4 h-4 text-green-600" /> :
+                            <AlertTriangle className="w-4 h-4 text-red-600" />
+                          }
+                        </div>
+                        <span className="font-semibold">Status Mutasi</span>
+                      </div>
+                      <div className="text-lg font-bold mb-2">
+                        {results.mutation}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Efisiensi: {results.efficiency}%
+                      </div>
+                    </div>
+
+                    {/* Grafik Sederhana */}
+                    <div className="p-4 bg-gray-50 rounded-xl">
+                      <h4 className="font-semibold mb-3">Perbandingan Hasil</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 w-16">Normal:</span>
+                          <div className="flex-1 bg-gray-200 rounded-full h-2">
+                            <div className="bg-gray-400 h-2 rounded-full" style={{width: '50%'}}></div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 w-16">Mutasi:</span>
+                          <div className="flex-1 bg-gray-200 rounded-full h-2">
+                            <div className="bg-green-500 h-2 rounded-full" style={{width: `${Math.min(100, 50 + parseFloat(results.yieldIncrease))}%`}}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Riwayat Simulasi dengan Gambar */}
+            {simulationHistory.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-lg p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-purple-100 rounded-lg">
+                    <Target className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900">Riwayat Eksperimen</h3>
+                </div>
+
+                <div className="space-y-3">
+                  {simulationHistory.map((history) => (
+                    <div key={history.id} className="p-4 bg-gray-50 rounded-xl">
+                      <div className="flex items-center gap-4 mb-2">
+                        <div className="w-12 h-12 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+                          <img 
+                            src={history.plant.image} 
+                            alt={history.plant.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'flex';
+                            }}
+                          />
+                          <div className="w-full h-full flex items-center justify-center bg-gray-200" style={{display: 'none'}}>
+                            <Leaf className="w-4 h-4 text-gray-400" />
+                          </div>
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="font-semibold text-gray-900">{history.plant.name}</span>
+                              <span className="text-sm text-gray-500">• {history.dose} Gy</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{history.timestamp}</span>
+                          </div>
+                          <div className="flex items-center gap-4 text-sm mt-1">
+                            <span className="text-green-600">+{history.results.yieldIncrease}% hasil</span>
+                            <span className="text-blue-600">{history.results.pestResistance}% resistensi</span>
+                            <span className="text-orange-600">{history.results.growthTime} hari</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

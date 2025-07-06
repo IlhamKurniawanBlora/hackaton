@@ -1,44 +1,53 @@
 // src/App.jsx
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AuthLayout from './layouts/AuthLayout';
+import MainLayout from './layouts/MainLayout';
+import AdminLayout from './layouts/AdminLayout';
+
 import HomePage from './pages/HomePage';
-import ModuleListPage from './pages/ModuleListPage'; // Pastikan nama filenya ModuleListPage.jsx
+import ModuleListPage from './pages/ModuleListPage';
 import ModuleDetailPage from './pages/ModuleDetailPage';
 import SimulationPage from './pages/SimulationPage';
 import SimulationDetailPage from './pages/SimulationDetailPage';
-import ChatbotPage from './pages/ChatbotPage';
-import CertificatesPage from './pages/CertificatesPage'; // Pastikan nama filenya CertificatesPage.jsx
-import ForumPage from './pages/ForumPage';
-import ForumTopicPage from './pages/ForumTopicPage';
+import CertificatesPage from './pages/CertificatesPage';
+import ForumPage from './pages/ForumTopicPage';
 import QuizDetailPage from './pages/QuizDetailPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
-// Perubahan di sini: Mengarahkan ke lokasi komponen di 'common'
-import Navbar from './components/common/Header'; // Menggunakan Header.jsx sebagai Navbar
-import Footer from './components/common/Footer'; // Mengarahkan ke Footer.jsx
+// Admin pages
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminUsersPage from './pages/admin/AdminUsersPage';
 
-function App() {
+export default function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/modules" element={<ModuleListPage />} />
-            <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
-            <Route path="/simulations" element={<SimulationPage />} />
-            <Route path="/simulations/:simulationId" element={<SimulationDetailPage />} />
-            <Route path="/chatbot" element={<ChatbotPage />} />
-            <Route path="/certificates" element={<CertificatesPage />} />
-            <Route path="/forum" element={<ForumPage />} />
-            <Route path="/forum/:topicId" element={<ForumTopicPage />} />
-            <Route path="/quiz/:quizId" element={<QuizDetailPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <Routes>
+        {/* Auth layout routes */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
+
+        {/* Main layout routes */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/modules" element={<ModuleListPage />} />
+          <Route path="/modules/:slug" element={<ModuleDetailPage />} />            
+          <Route path="/simulations" element={<SimulationPage />} />
+          <Route path="/simulations/:simulationId" element={<SimulationDetailPage />} />
+          <Route path="/certificates" element={<CertificatesPage />} />
+          <Route path="/forum" element={<ForumPage />} />
+          <Route path="/forum/:topicId" element={<ForumPage />} />
+          <Route path="/quiz/:quizId" element={<QuizDetailPage />} />
+        </Route>
+
+        {/* Admin layout routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboardPage />} />
+          <Route path="users" element={<AdminUsersPage />} />
+        </Route>
+      </Routes>
     </Router>
   );
 }
-
-export default App;

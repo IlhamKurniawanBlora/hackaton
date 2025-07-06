@@ -15,61 +15,18 @@ import {
 // Data simulasi
 const simulationsData = [
   {
-    id: 'sim-iradiasi-benih-optimal',
-    title: 'Simulasi Iradiasi Benih Optimal',
-    description: 'Eksperimen dengan dosis radiasi berbeda untuk melihat efek pada pertumbuhan dan hasil benih tanaman X.',
-    content: 'Dalam simulasi ini, Anda akan dapat memilih jenis benih, mengatur dosis radiasi (rendah, sedang, tinggi), dan mengamati perkecambahan serta pertumbuhan awal dalam jangka waktu virtual. Perhatikan bagaimana dosis yang berbeda dapat mempengaruhi vigor benih dan resistensi terhadap kondisi lingkungan tertentu. Tujuan simulasi ini adalah untuk membantu Anda memahami konsep optimasi dosis radiasi untuk hasil terbaik.',
-    link: 'https://www.google.com',
-    duration: '30 Menit',
-    imageUrl: '/assets/images/simulation-1.jpg',
-    level: 'Pemula',
+    id: 'optimalisasi-hasil-pertanian-radiasi',
+    slug: 'optimalisasi-hasil-pertanian-radiasi',
+    title: 'Optimalisasi Hasil Pertanian melalui Teknologi Radiasi',
+    description: 'Simulasi edukatif interaktif yang mengajarkan bagaimana radiasi digunakan untuk memicu mutasi tanaman secara terarah guna meningkatkan hasil panen dan ketahanan hama.',
+    content: 'Pengguna bisa melakukan eksperimen memilih jenis tanaman dan dosis radiasi untuk menghasilkan varietas unggul, serta memonitor hasil panen dan tingkat serangan hama melalui dashboard analitik.',
+    duration: '45 Menit',
+    level: 'Menengah',
     icon: Leaf,
     color: 'green',
     popularity: 4.8,
-    users: '2.1k'
-  },
-  {
-    id: 'sim-pengawetan-makanan-stroberi',
-    title: 'Simulasi Pengawetan Makanan (Stroberi)',
-    description: 'Amati efek iradiasi pada masa simpan stroberi dibandingkan dengan metode konvensional.',
-    content: 'Simulasi ini memvisualisasikan perbedaan masa simpan stroberi yang diiradiasi dan yang tidak diiradiasi. Anda akan melihat grafik pertumbuhan mikroba dan perubahan kualitas (misal: busuk, perubahan warna) seiring waktu. Ini akan memberikan gambaran jelas tentang efektivitas iradiasi sebagai metode pengawetan pangan.',
-    link: 'https://www.bing.com',
-    duration: '45 Menit',
-    imageUrl: '/assets/images/simulation-2.jpg',
-    level: 'Menengah',
-    icon: Shield,
-    color: 'orange',
-    popularity: 4.6,
-    users: '1.8k'
-  },
-  {
-    id: 'sim-analisis-penyerapan-hara',
-    title: 'Analisis Penyerapan Hara Tanah dengan Isotop',
-    description: 'Pahami bagaimana tanaman menyerap nutrisi dari tanah menggunakan pelacak isotop.',
-    content: 'Simulasi interaktif ini akan menunjukkan pergerakan nutrisi berlabel isotop di dalam tanah dan bagaimana akar tanaman menyerapnya. Anda bisa mengubah jenis tanah, ketersediaan air, dan jenis pupuk untuk melihat dampaknya pada efisiensi penyerapan nutrisi, sebuah konsep penting dalam pertanian presisi.',
-    link: 'https://www.yahoo.com',
-    duration: '60 Menit',
-    imageUrl: '/assets/images/simulation-3.jpg',
-    level: 'Lanjutan',
-    icon: Beaker,
-    color: 'blue',
-    popularity: 4.9,
-    users: '1.2k'
-  },
-  {
-    id: 'sim-manajemen-limbah-radioaktif',
-    title: 'Manajemen Limbah Radioaktif Pertanian',
-    description: 'Pelajari proses penanganan dan penyimpanan limbah radioaktif dari aplikasi pertanian.',
-    content: 'Simulasi ini akan membimbing Anda melalui tahapan pengelolaan limbah radioaktif tingkat rendah yang dihasilkan dari aplikasi pertanian (misalnya, dari alat ukur isotop). Anda akan belajar tentang klasifikasi limbah, metode dekomposisi atau pengemasan, hingga penyimpanan akhir yang aman sesuai dengan protokol internasional.',
-    link: 'https://www.duckduckgo.com',
-    duration: '50 Menit',
-    imageUrl: '/assets/images/simulation-4.jpg',
-    level: 'Lanjutan',
-    icon: Zap,
-    color: 'purple',
-    popularity: 4.7,
-    users: '890'
-  },
+    users: '2.3k'
+  }
 ];
 
 const levelColors = {
@@ -104,56 +61,7 @@ function SimulationPage() {
           </p>
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-green-100">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-green-100 rounded-xl">
-                <BookOpen className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-green-600">4</div>
-                <div className="text-sm text-gray-600">Simulasi Tersedia</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-orange-100">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-orange-100 rounded-xl">
-                <TrendingUp className="w-6 h-6 text-orange-600" />
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-orange-600">6.0k+</div>
-                <div className="text-sm text-gray-600">Total Pengguna</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-100">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-blue-100 rounded-xl">
-                <Star className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-blue-600">4.8</div>
-                <div className="text-sm text-gray-600">Rating Rata-rata</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-purple-100">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-purple-100 rounded-xl">
-                <Clock className="w-6 h-6 text-purple-600" />
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-purple-600">46m</div>
-                <div className="text-sm text-gray-600">Durasi Rata-rata</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Stats Section - Removed */}
 
         {/* Simulations Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -202,7 +110,9 @@ function SimulationPage() {
 
                   {/* Action Button */}
                   <button 
-                    onClick={() => window.open(simulation.link, '_blank')}
+                    onClick={() => {
+                      window.location.href = `/simulations/${simulation.slug}`;
+                    }}
                     className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                   >
                     <Play className="w-5 h-5" />

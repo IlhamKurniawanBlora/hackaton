@@ -1,9 +1,14 @@
 // src/components/common/Header.jsx
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
+  const navigate = useNavigate();
+  const { user, profile, signOut, isAuthenticated, getUserDisplayName, getUserAvatarUrl } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -11,6 +16,54 @@ function Header() {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen(!isUserMenuOpen);
+  };
+
+  const closeUserMenu = () => {
+    setIsUserMenuOpen(false);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      closeUserMenu();
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
+    closeUserMenu();
+  };
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        closeUserMenu();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Get user initials for avatar fallback
+  const getUserInitials = () => {
+    const name = getUserDisplayName();
+    return name
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
   };
 
   return (
@@ -24,12 +77,10 @@ function Header() {
               alt="AgriNuklir Icon" 
               className="header-logo-icon w-10 h-10 rounded-full border-2 border-orange-300 shadow-md"
               onError={(e) => {
-                // Fallback jika gambar tidak ditemukan
                 e.target.style.display = 'none';
                 e.target.nextSibling.style.display = 'flex';
               }}
             />
-            {/* Fallback icon menggunakan SVG */}
             <div className="fallback-icon w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center border-2 border-orange-300 shadow-md hidden">
               <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
@@ -45,26 +96,106 @@ function Header() {
           </div>
         </Link>
 
-        {/* Tombol Hamburger untuk Mobile */}
-        <div className="header-mobile-toggle lg:hidden">
-          <button 
-            onClick={toggleMenu} 
-            className="hamburger-button p-2 rounded-md hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-400"
-          >
-            {isMenuOpen ? (
-              <svg className="hamburger-icon w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
+        {/* Right Side - Auth & Mobile Menu */}
+        <div className="flex items-center space-x-4">
+          {/* Auth Section - Desktop */}
+          <div className="hidden lg:flex items-center space-x-3">
+            {isAuthenticated ? (
+              /* User Menu */
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  onClick={toggleUserMenu}
+                  className="flex items-center space-x-2 p-2 rounded-lg hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-400"
+                >
+                  <div className="w-8 h-8 rounded-full border-2 border-orange-300 overflow-hidden bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
+                    {getUserAvatarUrl() ? (
+                      <img 
+                        src={getUserAvatarUrl()} 
+                        alt="User Avatar" 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-white text-sm font-semibold">
+                        {getUserInitials()}
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-white text-sm font-medium hidden xl:block">
+                    {getUserDisplayName()}
+                  </span>
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"/>
+                  </svg>
+                </button>
+
+                {/* User Dropdown Menu */}
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-1 z-50">
+                    <div className="px-4 py-2 border-b border-gray-200">
+                      <p className="text-sm font-medium text-gray-900">{getUserDisplayName()}</p>
+                      <p className="text-xs text-gray-500">{user?.email}</p>
+                    </div>
+                    <button
+                      onClick={handleProfileClick}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
+                      </svg>
+                      <span>Profil</span>
+                    </button>
+                    <button
+                      onClick={handleSignOut}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2"
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd"/>
+                      </svg>
+                      <span>Keluar</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
-              <svg className="hamburger-icon w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
+              /* Login/Register Buttons */
+              <div className="flex items-center space-x-2">
+                <Link
+                  to="/login"
+                  className="px-4 py-2 text-white hover:text-orange-300 hover:bg-green-600 rounded-md transition-all duration-300 text-sm font-medium"
+                >
+                  Masuk
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md transition-all duration-300 text-sm font-medium shadow-md"
+                >
+                  Daftar
+                </Link>
+              </div>
             )}
-          </button>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <div className="lg:hidden">
+            <button 
+              onClick={toggleMenu} 
+              className="hamburger-button p-2 rounded-md hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-400"
+            >
+              {isMenuOpen ? (
+                <svg className="hamburger-icon w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              ) : (
+                <svg className="hamburger-icon w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Navigasi Desktop */}
-        <nav className="header-nav hidden lg:block">
+        <nav className="header-nav hidden lg:block absolute left-1/2 transform -translate-x-1/2">
           <ul className="nav-list flex space-x-1">
             <li>
               <Link to="/" className="nav-link px-4 py-2 text-white hover:text-orange-300 hover:bg-green-600 rounded-md transition-all duration-300 flex items-center space-x-1">
@@ -91,27 +222,11 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link to="/chatbot" className="nav-link px-4 py-2 text-white hover:text-orange-300 hover:bg-green-600 rounded-md transition-all duration-300 flex items-center space-x-1">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/>
-                </svg>
-                <span>Chatbot</span>
-              </Link>
-            </li>
-            <li>
               <Link to="/forum" className="nav-link px-4 py-2 text-white hover:text-orange-300 hover:bg-green-600 rounded-md transition-all duration-300 flex items-center space-x-1">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
                 </svg>
                 <span>Forum</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/certificates" className="nav-link px-4 py-2 text-white hover:text-orange-300 hover:bg-green-600 rounded-md transition-all duration-300 flex items-center space-x-1">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                </svg>
-                <span>Sertifikat</span>
               </Link>
             </li>
           </ul>
@@ -157,9 +272,34 @@ function Header() {
                 </svg>
               </button>
             </div>
+
+            {/* User Info Section - Mobile */}
+            {isAuthenticated && (
+              <div className="p-4 border-b border-green-600 bg-green-800/50">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 rounded-full border-2 border-orange-300 overflow-hidden bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
+                    {getUserAvatarUrl() ? (
+                      <img 
+                        src={getUserAvatarUrl()} 
+                        alt="User Avatar" 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-white text-lg font-semibold">
+                        {getUserInitials()}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-white font-medium">{getUserDisplayName()}</p>
+                    <p className="text-emerald-200 text-sm">{user?.email}</p>
+                  </div>
+                </div>
+              </div>
+            )}
             
             {/* Navigation Links */}
-            <nav className="p-4">
+            <nav className="p-4 flex-1">
               <ul className="mobile-nav-list space-y-2">
                 <li>
                   <Link 
@@ -199,18 +339,6 @@ function Header() {
                 </li>
                 <li>
                   <Link 
-                    to="/chatbot" 
-                    className="mobile-nav-link flex items-center space-x-3 p-3 text-white hover:text-orange-300 hover:bg-green-700 rounded-lg transition-all duration-300" 
-                    onClick={closeMenu}
-                  >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/>
-                    </svg>
-                    <span>Chatbot</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link 
                     to="/forum" 
                     className="mobile-nav-link flex items-center space-x-3 p-3 text-white hover:text-orange-300 hover:bg-green-700 rounded-lg transition-all duration-300" 
                     onClick={closeMenu}
@@ -221,23 +349,71 @@ function Header() {
                     <span>Forum</span>
                   </Link>
                 </li>
-                <li>
-                  <Link 
-                    to="/certificates" 
-                    className="mobile-nav-link flex items-center space-x-3 p-3 text-white hover:text-orange-300 hover:bg-green-700 rounded-lg transition-all duration-300" 
-                    onClick={closeMenu}
-                  >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                    </svg>
-                    <span>Sertifikat</span>
-                  </Link>
-                </li>
+                
+                {/* User Actions - Mobile */}
+                {isAuthenticated ? (
+                  <>
+                    <li className="pt-4 border-t border-green-600 mt-4">
+                      <Link 
+                        to="/profile" 
+                        className="mobile-nav-link flex items-center space-x-3 p-3 text-white hover:text-orange-300 hover:bg-green-700 rounded-lg transition-all duration-300" 
+                        onClick={closeMenu}
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
+                        </svg>
+                        <span>Profil</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <button 
+                        onClick={() => {
+                          handleSignOut();
+                          closeMenu();
+                        }}
+                        className="mobile-nav-link w-full flex items-center space-x-3 p-3 text-red-300 hover:text-red-200 hover:bg-red-900/30 rounded-lg transition-all duration-300" 
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd"/>
+                        </svg>
+                        <span>Keluar</span>
+                      </button>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="pt-4 border-t border-green-600 mt-4">
+                      <Link 
+                        to="/login" 
+                        className="mobile-nav-link flex items-center space-x-3 p-3 text-white hover:text-orange-300 hover:bg-green-700 rounded-lg transition-all duration-300" 
+                        onClick={closeMenu}
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-2 0V4H4v12h12v-2a1 1 0 012 0v3a1 1 0 01-1 1H4a1 1 0 01-1-1V3z" clipRule="evenodd"/>
+                          <path fillRule="evenodd" d="M13.293 7.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L14.586 11H7a1 1 0 110-2h7.586l-1.293-1.293a1 1 0 010-1.414z" clipRule="evenodd"/>
+                        </svg>
+                        <span>Masuk</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        to="/register" 
+                        className="mobile-nav-link flex items-center space-x-3 p-3 text-white bg-orange-500 hover:bg-orange-600 rounded-lg transition-all duration-300" 
+                        onClick={closeMenu}
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
+                        </svg>
+                        <span>Daftar</span>
+                      </Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </nav>
             
             {/* Footer Mobile Menu */}
-            <div className="absolute bottom-4 left-4 right-4 text-center">
+            <div className="p-4 border-t border-green-600 text-center">
               <p className="text-emerald-200 text-sm">
                 <span className="text-orange-300">Agri</span>
                 <span className="text-emerald-300">Nuklir</span> Platform

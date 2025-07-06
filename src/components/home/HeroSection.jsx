@@ -13,111 +13,97 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="relative h-screen overflow-hidden">
-      {/* Parallax Background Layers */}
+    <section className="relative h-screen overflow-hidden bg-gradient-to-br from-green-900 via-green-600 to-green-900">
+      {/* Subtle Background Pattern */}
       <div className="absolute inset-0">
-        {/* Layer 1 - Far Background (slowest) */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-green-800 to-teal-900"
-          style={{
-            transform: `translateY(${scrollY * 0.2}px)`,
-          }}
-        >
-          {/* Nuclear particles animation */}
-          <div className="absolute inset-0">
-            {[...Array(20)].map((_, i) => (
+        {/* Geometric Grid */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="grid grid-cols-12 gap-4 h-full">
+            {[...Array(48)].map((_, i) => (
               <div
                 key={i}
-                className={`absolute w-2 h-2 bg-orange-400 rounded-full opacity-70 animate-pulse`}
+                className="border border-emerald-400/20 rounded-lg"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${2 + Math.random() * 2}s`
+                  animationDelay: `${i * 0.1}s`,
                 }}
               />
             ))}
           </div>
         </div>
 
-        {/* Layer 2 - Mid Background */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            transform: `translateY(${scrollY * 0.4}px)`,
-          }}
-        >
-          {/* Agricultural field silhouettes */}
-          <svg className="absolute bottom-0 w-full h-64 text-green-700 opacity-30" viewBox="0 0 1200 300" preserveAspectRatio="none">
-            <path d="M0,200 Q300,150 600,180 T1200,160 L1200,300 L0,300 Z" fill="currentColor"/>
-          </svg>
-          <svg className="absolute bottom-0 w-full h-48 text-emerald-600 opacity-40" viewBox="0 0 1200 200" preserveAspectRatio="none">
-            <path d="M0,120 Q400,80 800,100 T1200,90 L1200,200 L0,200 Z" fill="currentColor"/>
-          </svg>
+        {/* Floating Orbs */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-br from-emerald-400/10 to-teal-400/10 rounded-full blur-3xl"
+            style={{
+              transform: `translateY(${scrollY * 0.1}px)`,
+            }}
+          />
+          <div 
+            className="absolute bottom-32 right-32 w-96 h-96 bg-gradient-to-br from-orange-400/10 to-amber-400/10 rounded-full blur-3xl"
+            style={{
+              transform: `translateY(${scrollY * 0.15}px)`,
+            }}
+          />
         </div>
-
-        {/* Layer 3 - Foreground (fastest) */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            transform: `translateY(${scrollY * 0.6}px)`,
-          }}
-        >
-          {/* Floating elements */}
-          <div className="absolute top-20 left-10 w-16 h-16 bg-orange-400/20 rounded-full blur-sm animate-bounce" style={{ animationDelay: '0s', animationDuration: '3s' }}></div>
-          <div className="absolute top-32 right-20 w-12 h-12 bg-emerald-400/20 rounded-full blur-sm animate-bounce" style={{ animationDelay: '1s', animationDuration: '4s' }}></div>
-          <div className="absolute bottom-40 left-1/4 w-20 h-20 bg-teal-400/20 rounded-full blur-md animate-bounce" style={{ animationDelay: '2s', animationDuration: '5s' }}></div>
-          <div className="absolute bottom-32 right-1/3 w-14 h-14 bg-green-400/20 rounded-full blur-sm animate-bounce" style={{ animationDelay: '0.5s', animationDuration: '3.5s' }}></div>
-        </div>
-
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-20 h-full flex items-center justify-center">
-        <div className="container mx-auto text-center px-4">
-          {/* Logo/Icon */}
+      <div className="relative z-10 h-full flex items-center justify-center">
+        <div className="container mx-auto text-center px-6 max-w-4xl">
+          {/* Logo */}
           <div className="mb-8 animate-fade-in-down">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full border-4 border-orange-300 shadow-2xl mb-4 overflow-hidden">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-2xl mb-6 transform rotate-12 hover:rotate-0 transition-transform duration-500 overflow-hidden">
               <img
                 src="../../../src/assets/icon.png"
                 alt="AgriNuklir Logo"
-                className="w-16 h-16 object-contain"
+                className="w-20 h-20 object-contain"
               />
             </div>
           </div>
 
           {/* Main Title */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-6 animate-fade-in-up">
-            <span className="block text-orange-300 drop-shadow-2xl">Agri</span>
-            <span className="block text-emerald-300 drop-shadow-2xl">Nuklir</span>
-          </h1>
-
-          {/* Subtitle */}
-          <div className="mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-white mb-2 drop-shadow-lg">
-              Platform Edukasi Nuklir Pertanian
-            </p>
-            <p className="text-lg md:text-xl text-emerald-100 max-w-3xl mx-auto drop-shadow-md">
-              Jelajahi revolusi teknologi nuklir dalam pertanian modern untuk masa depan pangan yang berkelanjutan
-            </p>
+          <div className="mb-8 animate-fade-in-up">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black leading-none mb-4">
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
+                Agri
+              </span>
+              <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 bg-clip-text text-transparent">
+                Nuklir
+              </span>
+            </h1>
+            
+            {/* Subtitle */}
+            <div className="space-y-3 mb-12">
+              <p className="text-2xl md:text-3xl font-semibold text-white/90">
+                Platform Edukasi Nuklir Pertanian
+              </p>
+              <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                Revolusi teknologi nuklir untuk masa depan pertanian yang berkelanjutan
+              </p>
+            </div>
           </div>
 
           {/* Call to Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <button className="group relative px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-full text-lg shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-orange-500/25 border-2 border-orange-400">
-              <span className="relative z-10 flex items-center space-x-2">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd"/>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <button 
+              onClick={() => window.location.href = '/modules'}
+              className="group relative px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold rounded-full text-lg shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-emerald-500/25 min-w-[200px]"
+            >
+              <span className="relative z-10 flex items-center justify-center space-x-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                 </svg>
                 <span>Mulai Belajar</span>
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
             </button>
             
-            <button className="group px-8 py-4 bg-transparent hover:bg-emerald-600/20 text-white font-semibold rounded-full text-lg border-2 border-emerald-400 hover:border-emerald-300 transition-all duration-300 hover:scale-105 backdrop-blur-sm">
-              <span className="flex items-center space-x-2">
+            <button 
+              onClick={() => window.location.href = '/about'}
+              className="group px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-full text-lg border-2 border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 backdrop-blur-sm min-w-[200px]"
+            >
+              <span className="flex items-center justify-center space-x-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
@@ -128,11 +114,8 @@ function HeroSection() {
 
           {/* Scroll Indicator */}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div className="flex flex-col items-center text-white/70">
-              <span className="text-sm mb-2">Scroll untuk menjelajahi</span>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-              </svg>
+            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+              <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
             </div>
           </div>
         </div>
@@ -143,7 +126,7 @@ function HeroSection() {
         @keyframes fade-in-down {
           from {
             opacity: 0;
-            transform: translateY(-50px);
+            transform: translateY(-30px);
           }
           to {
             opacity: 1;
@@ -154,7 +137,7 @@ function HeroSection() {
         @keyframes fade-in-up {
           from {
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(30px);
           }
           to {
             opacity: 1;
@@ -169,6 +152,18 @@ function HeroSection() {
         .animate-fade-in-up {
           animation: fade-in-up 1s ease-out forwards;
           opacity: 0;
+        }
+
+        /* Smooth text gradient animation */
+        @keyframes gradient-shift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        
+        .bg-gradient-to-r {
+          background-size: 200% 200%;
+          animation: gradient-shift 3s ease infinite;
         }
       `}</style>
     </section>

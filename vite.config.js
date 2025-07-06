@@ -5,5 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  
+  runtimeConfig: {
+    public: {
+      supabaseUrl: process.env.VITE_APP_SUPABASE_URL,
+      supabaseAnonKey: process.env.VITE_APP_SUPABASE_ANON_KEY,
+    },
+  },
 })
