@@ -1,7 +1,7 @@
 // src/components/common/Header.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '~/contexts/auth';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -73,7 +73,7 @@ function Header() {
         <Link to="/" className="header-logo flex items-center space-x-3 hover:opacity-90 transition-opacity" onClick={closeMenu}>
           <div className="logo-container relative">
             <img 
-              src="../../../src/assets/icon.png" 
+              src="icon.png" 
               alt="AgriNuklir Icon" 
               className="header-logo-icon w-10 h-10 rounded-full border-2 border-orange-300 shadow-md"
               onError={(e) => {
@@ -248,7 +248,7 @@ function Header() {
             <div className="p-4 border-b border-green-600 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <img 
-                  src="../../../src/assets/icon.png" 
+                  src="icon.png" 
                   alt="AgriNuklir Icon" 
                   className="w-8 h-8 rounded-full border border-orange-300"
                   onError={(e) => {

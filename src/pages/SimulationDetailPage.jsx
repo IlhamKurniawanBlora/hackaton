@@ -23,7 +23,7 @@ const plantTypes = [
   {
     id: 'padi',
     name: 'Padi',
-    image: '../../public/simulations/padi.png',
+    image: './simulations/padi.png',
     baseYield: 5.2,
     pestResistance: 60,
     growthTime: 120,
@@ -32,7 +32,7 @@ const plantTypes = [
   {
     id: 'jagung',
     name: 'Jagung',
-    image: '../../public/simulations/jagung.png',
+    image: './simulations/jagung.png',
     baseYield: 7.8,
     pestResistance: 45,
     growthTime: 90,
@@ -41,7 +41,7 @@ const plantTypes = [
   {
     id: 'kedelai',
     name: 'Kedelai',
-    image: '../../public/simulations/kedelai.png',
+    image: './simulations/kedelai.png',
     baseYield: 3.5,
     pestResistance: 70,
     growthTime: 85,
@@ -50,7 +50,7 @@ const plantTypes = [
   {
     id: 'tomat',
     name: 'Tomat',
-    image: '../../public/simulations/tomat.png',
+    image: './simulations/tomat.png',
     baseYield: 45.0,
     pestResistance: 55,
     growthTime: 75,

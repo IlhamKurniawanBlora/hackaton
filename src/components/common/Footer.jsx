@@ -12,7 +12,7 @@ function Footer() {
           <div className="footer-col footer-info lg:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
               <img 
-                src="../../../src/assets/icon.png" 
+                src="icon.png" 
                 alt="AgriNuklir Icon" 
                 className="w-8 h-8 rounded-full border-2 border-orange-300"
                 onError={(e) => {

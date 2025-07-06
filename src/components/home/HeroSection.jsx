@@ -55,7 +55,7 @@ function HeroSection() {
           <div className="mb-8 animate-fade-in-down">
             <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-2xl mb-6 transform rotate-12 hover:rotate-0 transition-transform duration-500 overflow-hidden">
               <img
-                src="../../../src/assets/icon.png"
+                src="icon.png"
                 alt="AgriNuklir Logo"
                 className="w-20 h-20 object-contain"
               />

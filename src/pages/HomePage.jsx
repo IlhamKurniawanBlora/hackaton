@@ -1,10 +1,10 @@
 // src/pages/HomePage.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import HeroSection from '../../src/components/home/HeroSection';
-import AboutSection from '../../src/components/home/AboutSection';
-import FeatureGrid from '../../src/components/home/FeatureGrid';
-import AgriNuclearChatbot from '../../src/components/chatbot/AgriNuclearChatbot';
+import HeroSection from '~/components/home/HeroSection';
+import AboutSection from '~/components/home/AboutSection';
+import FeatureGrid from '~/components/home/FeatureGrid';
+import AgriNuclearChatbot from '~/components/chatbot/AgriNuclearChatbot';
 
 function HomePage() {
   return (
