@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/auth';
+import { useAuth } from '~/contexts/auth';
 
 function Login() {
   const [formData, setFormData] = useState({

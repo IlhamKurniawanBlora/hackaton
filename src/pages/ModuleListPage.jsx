@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchModules, fetchModulesByLevel } from '../utils/modules';
+import { fetchModules, fetchModulesByLevel } from '~/utils/modules';
 
 // Clock Icon Component
 const ClockIcon = ({ className }) => (

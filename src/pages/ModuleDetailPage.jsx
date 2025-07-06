@@ -8,7 +8,7 @@ import {
   updateModuleComment, 
   deleteModuleComment,
   debugModuleSlugs 
-} from '../utils/modules';
+} from '~/utils/modules';
 
 // Icon Components
 const ClockIcon = ({ className }) => (

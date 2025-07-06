@@ -1,7 +1,7 @@
 // src/pages/QuizDetailPage.jsx
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import quizzes from '../data/quizzes'; // Impor data kuis
+import quizzes from '~/data/quizzes'; // Impor data kuis
 import { ArrowLeftIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 
 function QuizDetailPage() {

@@ -11,20 +11,17 @@ function Footer() {
           {/* Bagian 1: Informasi Platform */}
           <div className="footer-col footer-info lg:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
-              <img 
-                src="icon.png" 
-                alt="AgriNuklir Icon" 
-                className="w-8 h-8 rounded-full border-2 border-orange-300"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'flex';
-                }}
-              />
-              <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center border-2 border-orange-300 hidden">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-                </svg>
+             <div className="animate-fade-in-down mb-4">
+                <div className="inline-flex items-center justify-center w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-md overflow-hidden transform rotate-12 hover:rotate-0 transition-transform duration-500">
+                  <img
+                    src="/icon.png"
+                    alt="AgriNuklir Icon"
+                    className="w-8 h-8 object-contain"
+                  />
+                </div>
               </div>
+
+
               <h3 className="footer-logo-title text-xl font-bold">
                 <span className="text-orange-300">Agri</span>
                 <span className="text-emerald-300">Nuklir</span>

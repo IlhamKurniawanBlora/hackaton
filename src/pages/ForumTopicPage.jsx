@@ -14,7 +14,7 @@ import {
   XMarkIcon,
   ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
-import { forumService, commentService, forumHelpers } from '../utils/forum';
+import { forumService, commentService, forumHelpers } from '~/utils/forum';
 
 const categoryColors = {
   'Diskusi': 'bg-green-100 text-green-800 border-green-200',
