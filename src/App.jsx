@@ -9,11 +9,13 @@ import ModuleListPage from '~/pages/ModuleListPage';
 import ModuleDetailPage from '~/pages/ModuleDetailPage';
 import SimulationPage from '~/pages/SimulationPage';
 import SimulationDetailPage from '~/pages/SimulationDetailPage';
-import CertificatesPage from '~/pages/CertificatesPage';
+import CertificatePage from '~/pages/CertificatePage';
 import ForumPage from '~/pages/ForumTopicPage';
-import QuizDetailPage from '~/pages/QuizDetailPage';
 import LoginPage from '~/pages/LoginPage';
 import RegisterPage from '~/pages/RegisterPage';
+import ProfilePage from '~/pages/ProfilePage';
+import EducationModulePage from '~/pages/EducationModulePage';
+import QuizzPage from '~/pages/QuizzModulePage';
 
 // Admin pages
 import AdminDashboardPage from '~/pages/admin/AdminDashboardPage';
@@ -23,31 +25,34 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        {/* Auth layout routes */}
+        {/* Auth routes (public) */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
 
-        {/* Main layout routes */}
+        {/* User routes (protected) */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/modules" element={<ModuleListPage />} />
-          <Route path="/modules/:slug" element={<ModuleDetailPage />} />            
+          <Route path="/modules/:slug" element={<ModuleDetailPage />} />
           <Route path="/simulations" element={<SimulationPage />} />
           <Route path="/simulations/:slug" element={<SimulationDetailPage />} />
-          <Route path="/certificates" element={<CertificatesPage />} />
+          <Route path="/certificate/:moduleId" element={<CertificatePage />} />
           <Route path="/forum" element={<ForumPage />} />
           <Route path="/forum/:topicId" element={<ForumPage />} />
-          <Route path="/quiz/:quizId" element={<QuizDetailPage />} />
+          <Route path="/educations/:moduleId" element={<EducationModulePage />} />
+          <Route path="/quizzes/:moduleId" element={<QuizzPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
-        {/* Admin layout routes */}
+        {/* Admin routes (protected + admin role) */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboardPage />} />
           <Route path="users" element={<AdminUsersPage />} />
         </Route>
       </Routes>
     </Router>
+
   );
 }

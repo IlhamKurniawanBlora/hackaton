@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import HeroSection from '~/components/home/HeroSection';
 import AboutSection from '~/components/home/AboutSection';
 import FeatureGrid from '~/components/home/FeatureGrid';
+import AgriNuclearCertificationFlow from '~/components/AgriNuclearCertificationFlow';
 import AgriNuclearChatbot from '~/components/chatbot/AgriNuclearChatbot';
 
 function HomePage() {
@@ -26,6 +27,13 @@ function HomePage() {
       <section className="about-section py-16 bg-gradient-to-br from-emerald-50 to-green-50">
         <div className="container mx-auto px-4">
           <AboutSection />
+        </div>
+      </section>
+     
+      {/* About Section */}
+      <section className="about-section py-16 bg-gradient-to-br from-emerald-50 to-green-50">
+        <div className="container mx-auto px-4">
+          <AgriNuclearCertificationFlow />
         </div>
       </section>
       

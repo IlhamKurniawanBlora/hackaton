@@ -1,7 +1,48 @@
 import { supabase, getImageUrl } from './supabase';
+import { authService } from '~/utils/auth';
 
-// Fetch all modules
-export const fetchModules = async () => {
+// ====================
+// USER RELATED
+// ====================
+
+export const loadUserData = async () => {
+  try {
+    const { user: authUser } = await authService.getCurrentUser();
+    
+    if (!authUser) return null;
+
+    // Load profile data
+    const { data: profileData, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', authUser.id)
+      .single();
+
+    if (error && error.code !== 'PGRST116') {
+      console.error('Error loading profile:', error);
+      return { user: authUser, profile: null };
+    }
+
+    return {
+      user: authUser,
+      profile: profileData ? {
+        username: profileData.username || '',
+        full_name: profileData.full_name || '',
+        avatar_url: profileData.avatar_url || ''
+      } : null
+    };
+  } catch (error) {
+    console.error('Error loading user data:', error);
+    return null;
+  }
+};
+
+// ====================
+// MODULE CRUD
+// ====================
+
+// Get all active modules
+export const getModules = async () => {
   try {
     const { data, error } = await supabase
       .from('modules')
@@ -9,26 +50,20 @@ export const fetchModules = async () => {
       .eq('is_active', true)
       .order('created_at', { ascending: false });
 
-    if (error) {
-      console.error('Error fetching modules:', error);
-      return [];
-    }
+    if (error) throw error;
 
-    // Add image URLs for each module
-    const modulesWithImages = data.map(module => ({
+    return data.map(module => ({
       ...module,
       imageUrl: module.image_url ? getImageUrl('modules', module.image_url) : null
     }));
-
-    return modulesWithImages;
   } catch (error) {
     console.error('Error fetching modules:', error);
     return [];
   }
 };
 
-// Fetch modules by level
-export const fetchModulesByLevel = async (level) => {
+// Get modules by level
+export const getModulesByLevel = async (level) => {
   try {
     const { data, error } = await supabase
       .from('modules')
@@ -37,25 +72,20 @@ export const fetchModulesByLevel = async (level) => {
       .eq('level', level)
       .order('created_at', { ascending: false });
 
-    if (error) {
-      console.error('Error fetching modules by level:', error);
-      return [];
-    }
+    if (error) throw error;
 
-    const modulesWithImages = data.map(module => ({
+    return data.map(module => ({
       ...module,
       imageUrl: module.image_url ? getImageUrl('modules', module.image_url) : null
     }));
-
-    return modulesWithImages;
   } catch (error) {
     console.error('Error fetching modules by level:', error);
     return [];
   }
 };
 
-// Fetch single module by ID
-export const fetchModuleById = async (id) => {
+// Get single module by ID
+export const getModuleById = async (id) => {
   try {
     const { data, error } = await supabase
       .from('modules')
@@ -64,10 +94,7 @@ export const fetchModuleById = async (id) => {
       .eq('is_active', true)
       .single();
 
-    if (error) {
-      console.error('Error fetching module by ID:', error);
-      return null;
-    }
+    if (error) throw error;
 
     return {
       ...data,
@@ -79,49 +106,21 @@ export const fetchModuleById = async (id) => {
   }
 };
 
-// Fixed: Fetch single module by slug with better error handling
-export const fetchModuleBySlug = async (slug) => {
+// Get single module by slug
+export const getModuleBySlug = async (slug) => {
   try {
-    console.log('Fetching module with slug:', slug);
-    
-    // First, let's check if there are any modules at all
-    const { data: allModules, error: allError } = await supabase
-      .from('modules')
-      .select('slug, title, is_active')
-      .limit(10);
-    
-    if (allError) {
-      console.error('Error fetching all modules for debug:', allError);
-    } else {
-      console.log('Available modules:', allModules);
-    }
-
     const { data, error } = await supabase
       .from('modules')
       .select('*')
       .eq('slug', slug)
-      .eq('is_active', true);
+      .eq('is_active', true)
+      .single();
 
-    if (error) {
-      console.error('Error fetching module by slug:', error);
-      return null;
-    }
-
-    if (!data || data.length === 0) {
-      console.log('No module found with slug:', slug);
-      return null;
-    }
-
-    if (data.length > 1) {
-      console.warn('Multiple modules found with slug:', slug, 'taking first one');
-    }
-
-    const module = data[0];
-    console.log('Module found:', module);
+    if (error) throw error;
 
     return {
-      ...module,
-      imageUrl: module.image_url ? getImageUrl('modules', module.image_url) : null
+      ...data,
+      imageUrl: data.image_url ? getImageUrl('modules', data.image_url) : null
     };
   } catch (error) {
     console.error('Error fetching module by slug:', error);
@@ -129,66 +128,86 @@ export const fetchModuleBySlug = async (slug) => {
   }
 };
 
-// Alternative function to fetch by slug or ID
-export const fetchModuleBySlugOrId = async (identifier) => {
+// ====================
+// MODULE DETAILS (CHAPTERS)
+// ====================
+
+// Get all chapters for a module
+export const getModuleChapters = async (moduleId) => {
   try {
-    // First try to fetch by slug
-    let { data, error } = await supabase
-      .from('modules')
+    const { data, error } = await supabase
+      .from('modules_detail')
       .select('*')
-      .eq('slug', identifier)
-      .eq('is_active', true);
+      .eq('module_id', moduleId)
+      .order('sequence_order', { ascending: true });
 
-    // If no data found and identifier looks like an ID (numeric), try fetching by ID
-    if ((!data || data.length === 0) && !isNaN(identifier)) {
-      console.log('Slug not found, trying ID:', identifier);
-      const result = await supabase
-        .from('modules')
-        .select('*')
-        .eq('id', parseInt(identifier))
-        .eq('is_active', true);
-      
-      data = result.data;
-      error = result.error;
-    }
-
-    if (error) {
-      console.error('Error fetching module:', error);
-      return null;
-    }
-
-    if (!data || data.length === 0) {
-      console.log('No module found with identifier:', identifier);
-      return null;
-    }
-
-    const module = data[0];
-    return {
-      ...module,
-      imageUrl: module.image_url ? getImageUrl('modules', module.image_url) : null
-    };
+    if (error) throw error;
+    return data;
   } catch (error) {
-    console.error('Error fetching module by slug or ID:', error);
+    console.error('Error fetching module chapters:', error);
+    return [];
+  }
+};
+
+// Get single chapter by ID
+export const getChapterById = async (chapterId) => {
+  try {
+    const { data, error } = await supabase
+      .from('modules_detail')
+      .select('*')
+      .eq('id', chapterId)
+      .single();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('Error fetching chapter by ID:', error);
     return null;
   }
 };
 
-// Fetch comments for a module
-export const fetchModuleComments = async (moduleId) => {
+// Get module with its chapters
+export const getModuleWithChapters = async (moduleId) => {
+  try {
+    const [module, chapters] = await Promise.all([
+      getModuleById(moduleId),
+      getModuleChapters(moduleId)
+    ]);
+
+    return module ? { ...module, chapters } : null;
+  } catch (error) {
+    console.error('Error fetching module with chapters:', error);
+    return null;
+  }
+};
+
+// ====================
+// MODULE COMMENTS
+// ====================
+
+// Get module comments with user info
+export const getModuleComments = async (moduleId) => {
   try {
     const { data, error } = await supabase
       .from('comment_modules')
-      .select('*')
+      .select(`
+        *,
+        users:user_id (
+          id,
+          full_name,
+          username
+        )
+      `)
       .eq('module_id', moduleId)
       .is('deleted_at', null)
       .order('created_at', { ascending: false });
 
-    if (error) {
-      console.error('Error fetching module comments:', error);
-      return [];
-    }
+    if (error) throw error;
 
-    return data;
+    return data.map(comment => ({
+      ...comment,
+      user_name: comment.users?.full_name || comment.users?.username || 'Anonymous'
+    }));
   } catch (error) {
     console.error('Error fetching module comments:', error);
     return [];
@@ -196,26 +215,39 @@ export const fetchModuleComments = async (moduleId) => {
 };
 
 // Add comment to module
-export const addModuleComment = async (moduleId, userId, comment) => {
+export const addModuleComment = async (moduleId, comment, rating = null) => {
   try {
-    const { data, error } = await supabase
-      .from('comment_modules')
-      .insert([
-        {
-          module_id: moduleId,
-          user_id: userId,
-          comment,
-        }
-      ])
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Error adding module comment:', error);
-      return null;
+    const user = await authService.getCurrentUser();
+    if (!user?.user?.id) {
+      throw new Error('User not authenticated');
     }
 
-    return data;
+    const insertData = {
+      module_id: moduleId,
+      user_id: user.user.id,
+      comment,
+      ...(rating && { rating })
+    };
+
+    const { data, error } = await supabase
+      .from('comment_modules')
+      .insert([insertData])
+      .select(`
+        *,
+        users:user_id (
+          id,
+          full_name,
+          username
+        )
+      `)
+      .single();
+
+    if (error) throw error;
+
+    return {
+      ...data,
+      user_name: data.users?.full_name || data.users?.username || 'Anonymous'
+    };
   } catch (error) {
     console.error('Error adding module comment:', error);
     return null;
@@ -225,31 +257,38 @@ export const addModuleComment = async (moduleId, userId, comment) => {
 // Update comment
 export const updateModuleComment = async (commentId, comment, rating = null) => {
   try {
-    const updateData = { comment };
-    if (rating !== null) {
-      updateData.rating = rating;
-    }
+    const updateData = {
+      comment,
+      ...(rating && { rating })
+    };
 
     const { data, error } = await supabase
       .from('comment_modules')
       .update(updateData)
       .eq('id', commentId)
-      .select()
+      .select(`
+        *,
+        users:user_id (
+          id,
+          full_name,
+          username
+        )
+      `)
       .single();
 
-    if (error) {
-      console.error('Error updating module comment:', error);
-      return null;
-    }
+    if (error) throw error;
 
-    return data;
+    return {
+      ...data,
+      user_name: data.users?.full_name || data.users?.username || 'Anonymous'
+    };
   } catch (error) {
     console.error('Error updating module comment:', error);
     return null;
   }
 };
 
-// Soft delete comment
+// Delete comment (soft delete)
 export const deleteModuleComment = async (commentId) => {
   try {
     const { data, error } = await supabase
@@ -259,34 +298,10 @@ export const deleteModuleComment = async (commentId) => {
       .select()
       .single();
 
-    if (error) {
-      console.error('Error deleting module comment:', error);
-      return null;
-    }
-
+    if (error) throw error;
     return data;
   } catch (error) {
     console.error('Error deleting module comment:', error);
     return null;
-  }
-};
-
-// Debug function to check all module slugs
-export const debugModuleSlugs = async () => {
-  try {
-    const { data, error } = await supabase
-      .from('modules')
-      .select('id, title, slug, is_active')
-      .eq('is_active', true);
-
-    if (error) {
-      console.error('Error fetching module slugs:', error);
-      return;
-    }
-
-    console.log('All active module slugs:', data);
-    return data;
-  } catch (error) {
-    console.error('Error in debugModuleSlugs:', error);
   }
 };

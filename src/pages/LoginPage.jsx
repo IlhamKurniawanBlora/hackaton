@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '~/contexts/auth';
+import { signIn } from '~/utils/auth';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -12,7 +12,6 @@ function Login() {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   
-  const { signIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -35,15 +34,14 @@ function Login() {
     setError('');
 
     try {
-      const { data, error } = await signIn(formData.email, formData.password);
+      const result = await signIn(formData.email, formData.password);
       
-      if (error) {
-        setError(error.message || 'Terjadi kesalahan saat masuk');
-        return;
+      if (result.success) {
+        // Arahkan ke halaman sebelumnya atau home
+        navigate(from, { replace: true });
+      } else {
+        setError(result.error);
       }
-      
-      // Navigate to the intended page or dashboard
-      navigate(from, { replace: true });
     } catch (err) {
       setError('Terjadi kesalahan yang tidak terduga');
     } finally {
@@ -145,12 +143,13 @@ function Login() {
               </div>
 
               {/* Forgot Password Link */}
-              <div className="flex items-center justify-between">
-                <div className="text-sm">
-                  <Link to="/forgot-password" className="text-orange-600 hover:text-orange-500">
-                    Lupa password?
-                  </Link>
-                </div>
+              <div className="flex justify-end">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-orange-600 hover:text-orange-500 font-medium"
+                >
+                  Lupa password?
+                </Link>
               </div>
 
               {/* Submit Button */}
@@ -174,20 +173,6 @@ function Login() {
             </div>
           </div>
         </form>
-
-        {/* Footer */}
-        <div className="text-center">
-          <p className="text-gray-600 text-sm">
-            Dengan masuk, Anda menyetujui{' '}
-            <Link to="/terms" className="text-orange-600 hover:text-orange-500">
-              Syarat & Ketentuan
-            </Link>{' '}
-            dan{' '}
-            <Link to="/privacy" className="text-orange-600 hover:text-orange-500">
-              Kebijakan Privasi
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );

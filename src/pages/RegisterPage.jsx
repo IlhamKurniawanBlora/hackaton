@@ -1,22 +1,21 @@
 // src/pages/Register.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '~/contexts/auth';
+import { authService } from '~/utils/auth';
 
 function Register() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    fullName: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
-  const { signUp } = useAuth();
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -28,16 +27,12 @@ function Register() {
     
     // Clear error when user starts typing
     if (error) setError('');
+    if (success) setSuccess('');
   };
 
   const validateForm = () => {
-    if (!formData.firstName.trim()) {
-      setError('Nama depan harus diisi');
-      return false;
-    }
-    
-    if (!formData.lastName.trim()) {
-      setError('Nama belakang harus diisi');
+    if (!formData.fullName.trim()) {
+      setError('Nama lengkap harus diisi');
       return false;
     }
     
@@ -71,26 +66,49 @@ function Register() {
     
     setLoading(true);
     setError('');
+    setSuccess('');
 
     try {
       const userData = {
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        full_name: `${formData.firstName} ${formData.lastName}`.trim()
+        full_name: formData.fullName.trim()
       };
 
-      const { data, error } = await signUp(formData.email, formData.password, userData);
+      const result = await authService.signUp(formData.email, formData.password, userData);
       
-      if (error) {
-        setError(error.message || 'Terjadi kesalahan saat mendaftar');
+      if (!result.success) {
+        setError(result.error);
         return;
       }
+
+      // Handle successful registration
+      if (result.needsConfirmation) {
+        setSuccess('Pendaftaran berhasil! Kami telah mengirim link konfirmasi ke email Anda. Silakan cek email untuk mengaktifkan akun.');
+        // Reset form
+        setFormData({
+          fullName: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        });
+        
+        // Redirect to login after 3 seconds
+        setTimeout(() => {
+          navigate('/login', { 
+            state: { 
+              message: 'Silakan konfirmasi email Anda terlebih dahulu, kemudian masuk di sini.' 
+            } 
+          });
+        }, 3000);
+      } else {
+        setSuccess('Pendaftaran berhasil! Mengalihkan ke halaman utama...');
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 1500);
+      }
       
-      // Show success message and redirect
-      alert('Pendaftaran berhasil! Silakan cek email untuk verifikasi.');
-      navigate('/login');
     } catch (err) {
-      setError('Terjadi kesalahan yang tidak terduga');
+      console.error('Registration error:', err);
+      setError('Terjadi kesalahan yang tidak terduga. Silakan coba lagi.');
     } finally {
       setLoading(false);
     }
@@ -98,25 +116,45 @@ function Register() {
 
   const getPasswordStrength = (password) => {
     if (password.length === 0) return { level: 0, text: '', color: '' };
-    if (password.length < 6) return { level: 1, text: 'Lemah', color: 'text-red-500' };
-    if (password.length < 8) return { level: 2, text: 'Sedang', color: 'text-yellow-500' };
-    if (password.length >= 8 && /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
-      return { level: 4, text: 'Sangat Kuat', color: 'text-green-500' };
+    
+    let score = 0;
+    
+    // Length check
+    if (password.length >= 6) score += 1;
+    if (password.length >= 8) score += 1;
+    
+    // Character variety checks
+    if (/[a-z]/.test(password)) score += 1;
+    if (/[A-Z]/.test(password)) score += 1;
+    if (/[0-9]/.test(password)) score += 1;
+    if (/[^a-zA-Z0-9]/.test(password)) score += 1;
+    
+    if (password.length < 6) {
+      return { level: 1, text: 'Terlalu Pendek', color: 'text-red-500' };
     }
-    return { level: 3, text: 'Kuat', color: 'text-green-500' };
+    
+    if (score <= 2) {
+      return { level: 2, text: 'Lemah', color: 'text-red-500' };
+    } else if (score <= 4) {
+      return { level: 3, text: 'Sedang', color: 'text-yellow-500' };
+    } else if (score <= 5) {
+      return { level: 4, text: 'Kuat', color: 'text-green-500' };
+    } else {
+      return { level: 5, text: 'Sangat Kuat', color: 'text-green-600' };
+    }
   };
 
   const passwordStrength = getPasswordStrength(formData.password);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-green-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
-          <Link to="/" className="inline-flex items-center space-x-2 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center">
+          <Link to="/" className="inline-flex items-center space-x-2 mb-6 hover:opacity-80 transition-opacity">
+            <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
               <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
               </svg>
             </div>
             <span className="text-2xl font-bold">
@@ -126,8 +164,11 @@ function Register() {
           </Link>
           <h2 className="text-3xl font-bold text-gray-900">Buat Akun Baru</h2>
           <p className="mt-2 text-gray-600">
+            Bergabunglah dengan platform pertanian modern
+          </p>
+          <p className="mt-1 text-sm text-gray-500">
             Sudah punya akun?{' '}
-            <Link to="/login" className="text-orange-600 hover:text-orange-500 font-medium">
+            <Link to="/login" className="text-orange-600 hover:text-orange-500 font-medium transition-colors">
               Masuk sekarang
             </Link>
           </p>
@@ -135,13 +176,25 @@ function Register() {
 
         {/* Form */}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-xl border border-white/50">
             <div className="space-y-6">
+              {/* Success Message */}
+              {success && (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                    </svg>
+                    <span className="text-green-800 text-sm">{success}</span>
+                  </div>
+                </div>
+              )}
+
               {/* Error Message */}
               {error && (
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                   <div className="flex items-center">
-                    <svg className="w-5 h-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 text-red-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                     </svg>
                     <span className="text-red-800 text-sm">{error}</span>
@@ -149,44 +202,28 @@ function Register() {
                 </div>
               )}
 
-              {/* Name Fields */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Nama Depan
-                  </label>
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    required
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Nama depan"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Nama Belakang
-                  </label>
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    required
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Nama belakang"
-                  />
-                </div>
+              {/* Full Name Field */}
+              <div>
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Nama Lengkap *
+                </label>
+                <input
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  required
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-white/70"
+                  placeholder="Contoh: John Doe"
+                  disabled={loading}
+                />
               </div>
 
               {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
+                  Email *
                 </label>
                 <input
                   id="email"
@@ -195,15 +232,16 @@ function Register() {
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Masukkan email Anda"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-white/70"
+                  placeholder="contoh@email.com"
+                  disabled={loading}
                 />
               </div>
 
               {/* Password Field */}
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
+                  Password *
                 </label>
                 <div className="relative">
                   <input
@@ -213,13 +251,15 @@ function Register() {
                     required
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 pr-12"
-                    placeholder="Buat password"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 pr-12 bg-white/70"
+                    placeholder="Minimal 6 karakter"
+                    disabled={loading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                    disabled={loading}
                   >
                     {showPassword ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -246,10 +286,11 @@ function Register() {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div 
                         className={`h-2 rounded-full transition-all duration-300 ${
-                          passwordStrength.level === 1 ? 'bg-red-500 w-1/4' :
-                          passwordStrength.level === 2 ? 'bg-yellow-500 w-2/4' :
-                          passwordStrength.level === 3 ? 'bg-green-500 w-3/4' :
-                          passwordStrength.level === 4 ? 'bg-green-600 w-full' :
+                          passwordStrength.level === 1 ? 'bg-red-500 w-1/5' :
+                          passwordStrength.level === 2 ? 'bg-red-400 w-2/5' :
+                          passwordStrength.level === 3 ? 'bg-yellow-500 w-3/5' :
+                          passwordStrength.level === 4 ? 'bg-green-500 w-4/5' :
+                          passwordStrength.level === 5 ? 'bg-green-600 w-full' :
                           'bg-gray-300 w-0'
                         }`}
                       />
@@ -261,7 +302,7 @@ function Register() {
               {/* Confirm Password Field */}
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                  Konfirmasi Password
+                  Konfirmasi Password *
                 </label>
                 <div className="relative">
                   <input
@@ -271,13 +312,15 @@ function Register() {
                     required
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 pr-12"
-                    placeholder="Konfirmasi password"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 pr-12 bg-white/70"
+                    placeholder="Ketik ulang password"
+                    disabled={loading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                    disabled={loading}
                   >
                     {showConfirmPassword ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -297,17 +340,17 @@ function Register() {
                   <div className="mt-2">
                     {formData.password === formData.confirmPassword ? (
                       <div className="flex items-center text-green-600">
-                        <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                         </svg>
-                        <span className="text-xs">Password cocok</span>
+                        <span className="text-sm">Password cocok</span>
                       </div>
                     ) : (
                       <div className="flex items-center text-red-600">
-                        <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                         </svg>
-                        <span className="text-xs">Password tidak cocok</span>
+                        <span className="text-sm">Password tidak cocok</span>
                       </div>
                     )}
                   </div>
@@ -315,11 +358,11 @@ function Register() {
               </div>
 
               {/* Submit Button */}
-              <div>
+              <div className="pt-4">
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 active:scale-95"
                 >
                   {loading ? (
                     <div className="flex items-center">
@@ -327,18 +370,31 @@ function Register() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                       </svg>
-                      Mendaftar...
+                      Mendaftarkan Akun...
                     </div>
                   ) : (
-                    'Daftar Sekarang'
+                    <div className="flex items-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                      </svg>
+                      Daftar Sekarang
+                    </div>
                   )}
                 </button>
+              </div>
+
+              {/* Additional Info */}
+              <div className="text-center text-xs text-gray-500 mt-4">
+                <p>Dengan mendaftar, Anda menyetujui</p>
+                <p>
+                  <Link to="/terms" className="text-orange-600 hover:text-orange-500">Syarat & Ketentuan</Link>
+                  {' dan '}
+                  <Link to="/privacy" className="text-orange-600 hover:text-orange-500">Kebijakan Privasi</Link>
+                </p>
               </div>
             </div>
           </div>
         </form>
-
-        
       </div>
     </div>
   );

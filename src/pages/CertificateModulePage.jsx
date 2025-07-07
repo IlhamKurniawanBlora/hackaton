@@ -1,13 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { testService } from '../utils/test';
 import { authService } from '../utils/auth';
-import { getModuleById } from '../utils/modules';
 import { Download, Award, Calendar, Check, Share2, ArrowLeft, Star } from 'lucide-react';
-import { useParams } from 'react-router-dom';
 
 const CertificatePage = () => {
   // Mock moduleId for demo - in real app this would come from URL params
-  const { moduleId } = useParams();
+  const moduleId = 'e51d7795-b5bc-4f7d-a726-bdeb21ce20e9';
   
   // State management
   const [certification, setCertification] = useState(null);
@@ -46,9 +44,12 @@ const CertificatePage = () => {
         setCertification(result.certification);
         
         // Mock module data - in real app, fetch from modules table
-        // Fetch module data by id
-        const module = await getModuleById(moduleId);
-        setModuleData(module);
+        setModuleData({
+          title: 'Advanced Web Development',
+          description: 'Complete course on modern web development techniques',
+          instructor: 'John Doe',
+          duration: '40 hours'
+        });
         
       } catch (err) {
         setError(err.message);
@@ -302,7 +303,7 @@ const CertificatePage = () => {
             
             <div className="text-right">
               <div className="w-32 h-px bg-gray-400 mb-2"></div>
-              <p className="text-sm text-gray-600">AgriNUclear</p>
+              <p className="text-sm text-gray-600">Authorized Signature</p>
             </div>
           </div>
 

@@ -1,14 +1,49 @@
 // src/components/common/Header.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '~/contexts/auth';
+import { authService } from '~/utils/auth';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const userMenuRef = useRef(null);
   const navigate = useNavigate();
-  const { user, profile, signOut, isAuthenticated, getUserDisplayName, getUserAvatarUrl } = useAuth();
+
+  // Initialize auth state
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        const { user, session } = await authService.getCurrentUser();
+        setUser(user);
+        setSession(session);
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initAuth();
+
+    // Listen for auth state changes
+    const unsubscribe = authService.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN') {
+        setUser(session?.user || null);
+        setSession(session);
+      } else if (event === 'SIGNED_OUT') {
+        setUser(null);
+        setSession(null);
+      } else if (event === 'TOKEN_REFRESHED') {
+        setUser(session?.user || null);
+        setSession(session);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,9 +63,13 @@ function Header() {
 
   const handleSignOut = async () => {
     try {
-      await signOut();
-      closeUserMenu();
-      navigate('/');
+      const result = await authService.signOut();
+      if (result.success) {
+        closeUserMenu();
+        navigate('/');
+      } else {
+        console.error('Sign out error:', result.error);
+      }
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -55,7 +94,24 @@ function Header() {
     };
   }, []);
 
-  // Get user initials for avatar fallback
+  // Helper functions
+  const isAuthenticated = !!user && !!session;
+
+  const getUserDisplayName = () => {
+    if (!user) return '';
+    return user.user_metadata?.full_name || 
+           user.user_metadata?.name || 
+           user.email?.split('@')[0] || 
+           'User';
+  };
+
+  const getUserAvatarUrl = () => {
+    if (!user) return null;
+    return user.user_metadata?.avatar_url || 
+           user.user_metadata?.picture || 
+           null;
+  };
+
   const getUserInitials = () => {
     const name = getUserDisplayName();
     return name
@@ -66,12 +122,30 @@ function Header() {
       .substring(0, 2);
   };
 
+  // Show loading state
+  if (isLoading) {
+    return (
+      <header className="header bg-gradient-to-r from-emerald-800 via-green-700 to-teal-800 shadow-lg border-b-2 border-orange-400">
+        <div className="header-inner container mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl animate-pulse"></div>
+            <div className="h-6 w-32 bg-emerald-600 rounded animate-pulse"></div>
+          </div>
+          <div className="hidden lg:flex items-center space-x-3">
+            <div className="w-20 h-8 bg-emerald-600 rounded animate-pulse"></div>
+            <div className="w-20 h-8 bg-orange-500 rounded animate-pulse"></div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className="header bg-gradient-to-r from-emerald-800 via-green-700 to-teal-800 shadow-lg border-b-2 border-orange-400">
       <div className="header-inner container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo/Nama Platform */}
         <Link to="/" className="header-logo flex items-center space-x-3 hover:opacity-90 transition-opacity" onClick={closeMenu}>
-         <div className="animate-fade-in-down mb-4">
+          <div className="animate-fade-in-down">
             <div className="inline-flex items-center justify-center w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-md overflow-hidden transform rotate-12 hover:rotate-0 transition-transform duration-500">
               <img
                 src="/icon.png"
@@ -80,8 +154,6 @@ function Header() {
               />
             </div>
           </div>
-
-
 
           <div className="logo-text">
             <h1 className="text-xl font-bold text-white">
@@ -242,7 +314,7 @@ function Header() {
           <div className="mobile-menu fixed top-0 right-0 w-80 h-full bg-gradient-to-b from-emerald-800 to-green-900 shadow-2xl z-50 lg:hidden transform transition-transform duration-300 ease-in-out">
             {/* Header Mobile Menu */}
             <div className="p-4 border-b border-green-600 flex items-center justify-between">
-              <div className="animate-fade-in-down mb-4">
+              <div className="animate-fade-in-down">
                 <div className="inline-flex items-center justify-center w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-md overflow-hidden transform rotate-12 hover:rotate-0 transition-transform duration-500">
                   <img
                     src="/icon.png"
@@ -251,7 +323,6 @@ function Header() {
                   />
                 </div>
               </div>
-
 
               <button 
                 onClick={closeMenu}

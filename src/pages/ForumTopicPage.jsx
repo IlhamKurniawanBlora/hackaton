@@ -15,6 +15,7 @@ import {
   ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
 import { forumService, commentService, forumHelpers } from '~/utils/forum';
+import FormForum from '~/components/FormForum.jsx';
 
 const categoryColors = {
   'Diskusi': 'bg-green-100 text-green-800 border-green-200',
@@ -36,6 +37,7 @@ function ForumPage() {
   const [submittingComment, setSubmittingComment] = useState(false);
   const [loadingComments, setLoadingComments] = useState(new Set());
   const [deletingComment, setDeletingComment] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
     loadForums();
@@ -56,6 +58,11 @@ function ForumPage() {
     }
   };
 
+  const handleForumCreated = (newForum) => {
+      // Add new forum to the top of the list
+      setForums(prev => [newForum, ...prev]);
+    };
+    
   const toggleForum = useCallback(async (forumId) => {
     const newExpanded = new Set(expandedForums);
     
@@ -287,11 +294,21 @@ function ForumPage() {
             </div>
           </div>
           
-          <button className="inline-flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+           <button
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            onClick={() => setShowCreateModal(true)}
+          >
             <PlusIcon className="w-5 h-5" />
             Buat Topik Baru
           </button>
         </div>
+
+        {/* Create Forum Modal */}
+        <FormForum 
+          isOpen={showCreateModal}
+          onClose={() => setShowCreateModal(false)}
+          onForumCreated={handleForumCreated}
+        />
 
         {/* Forum Topics */}
         <div className="space-y-4">
