@@ -18,8 +18,11 @@ import EducationModulePage from '~/pages/EducationModulePage';
 import QuizzPage from '~/pages/QuizzModulePage';
 
 // Admin pages
-import AdminDashboardPage from '~/pages/admin/AdminDashboardPage';
-import AdminUsersPage from '~/pages/admin/AdminUsersPage';
+import ModuleAdminPage from '~/pages/admin/ModuleAdminPage';
+import ModuleDataAdminPage from '~/pages/admin/ModuleDataAdminPage';
+import ModuleDetailAdminPage from '~/pages/admin/ModuleDetailAdminPage';
+import ModuleDataQuizzAdminPage from '~/pages/admin/ModuleDataQuizzAdminPage';
+import ModuleDetailQuizzAdminPage from '~/pages/admin/ModuleDetailQuizzAdminPage';
 
 export default function App() {
   return (
@@ -48,11 +51,15 @@ export default function App() {
 
         {/* Admin routes (protected + admin role) */}
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboardPage />} />
-          <Route path="users" element={<AdminUsersPage />} />
+          <Route index element={<ModuleAdminPage />} />
+          <Route path="module-detail" element={<ModuleDataAdminPage />} />
+          <Route path="module-detail/:moduleId" element={<ModuleDetailAdminPage />} />
+          <Route path="quizzes" element={<ModuleDataQuizzAdminPage />} />
+          <Route path="quizzes/:moduleId" element={<ModuleDetailQuizzAdminPage />} />
         </Route>
       </Routes>
     </Router>
 
   );
+  
 }

@@ -147,15 +147,19 @@ function Register() {
   const passwordStrength = getPasswordStrength(formData.password);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen  flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl space-y-8">
         {/* Header */}
         <div className="text-center">
           <Link to="/" className="inline-flex items-center space-x-2 mb-6 hover:opacity-80 transition-opacity">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
-              <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
+            <div className="mb-8 animate-fade-in-down">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-2xl mb-6 transform rotate-12 hover:rotate-0 transition-transform duration-500 overflow-hidden">
+                <img
+                  src="/icon.png"
+                  alt="AgriNuklir Logo"
+                  className="w-16 h-16 object-contain"
+                />
+              </div>
             </div>
             <span className="text-2xl font-bold">
               <span className="text-orange-600">Agri</span>
@@ -176,8 +180,8 @@ function Register() {
 
         {/* Form */}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-xl border border-white/50">
-            <div className="space-y-6">
+          <div className="bg-white/80 backdrop-blur-sm p-8 md:p-10 lg:p-12 xl:p-16 rounded-xl shadow-xl border border-white/50">
+            <div className="space-y-6 md:space-y-8">
               {/* Success Message */}
               {success && (
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -214,7 +218,7 @@ function Register() {
                   required
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-white/70"
+                  className="w-full px-4 py-3 md:px-6 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-white/70 text-base"
                   placeholder="Contoh: John Doe"
                   disabled={loading}
                 />
@@ -232,7 +236,7 @@ function Register() {
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-white/70"
+                  className="w-full px-4 py-3 md:px-6 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-white/70 text-base"
                   placeholder="contoh@email.com"
                   disabled={loading}
                 />
@@ -251,7 +255,7 @@ function Register() {
                     required
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 pr-12 bg-white/70"
+                    className="w-full px-4 py-3 md:px-6 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 pr-12 bg-white/70 text-base"
                     placeholder="Minimal 6 karakter"
                     disabled={loading}
                   />
@@ -312,7 +316,7 @@ function Register() {
                     required
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 pr-12 bg-white/70"
+                    className="w-full px-4 py-3 md:px-6 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 pr-12 bg-white/70 text-base"
                     placeholder="Ketik ulang password"
                     disabled={loading}
                   />
@@ -362,7 +366,7 @@ function Register() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 active:scale-95"
+                  className="w-full flex justify-center py-3 px-4 md:py-4 md:px-6 border border-transparent rounded-lg shadow-sm text-base md:text-lg font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 active:scale-95"
                 >
                   {loading ? (
                     <div className="flex items-center">
@@ -387,9 +391,9 @@ function Register() {
               <div className="text-center text-xs text-gray-500 mt-4">
                 <p>Dengan mendaftar, Anda menyetujui</p>
                 <p>
-                  <Link to="/terms" className="text-orange-600 hover:text-orange-500">Syarat & Ketentuan</Link>
+                  <Link to="/#" className="text-orange-600 hover:text-orange-500">Syarat & Ketentuan</Link>
                   {' dan '}
-                  <Link to="/privacy" className="text-orange-600 hover:text-orange-500">Kebijakan Privasi</Link>
+                  <Link to="/#" className="text-orange-600 hover:text-orange-500">Kebijakan Privasi</Link>
                 </p>
               </div>
             </div>

@@ -1,8 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookOpen, FileText, Award, MessageSquare, Star, ArrowRight, Users, Calendar } from 'lucide-react';
 
 const AgriNuclearCertificationFlow = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
+  const [visibleSteps, setVisibleSteps] = useState(new Set());
+
+  // Handle scroll for animations
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const stepIndex = parseInt(entry.target.getAttribute('data-step'));
+            setVisibleSteps(prev => new Set(prev).add(stepIndex));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const stepElements = document.querySelectorAll('[data-step]');
+    stepElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   const steps = [
     {
@@ -104,162 +136,174 @@ const AgriNuclearCertificationFlow = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
+    <div className="min-h-screen p-4">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+        {/* Header with scroll-based animation */}
+        <div 
+          className="text-center mb-8 transition-all duration-1000 ease-out"
+          style={{
+            transform: `translateY(${scrollY * 0.1}px)`,
+            opacity: Math.max(0, 1 - scrollY * 0.002)
+          }}
+        >
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 transform transition-all duration-700 hover:scale-110 hover:rotate-12">
             <BookOpen className="w-8 h-8 text-green-600" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2 transform transition-all duration-500 hover:scale-105">
             Sertifikasi Kompetensi Agri Nuclear
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto transition-all duration-300 hover:text-gray-800">
             Ikuti 6 langkah terstruktur untuk mendapatkan sertifikat profesional
           </p>
         </div>
 
-        {/* Steps Grid */}
+        {/* Steps Grid with scroll animations */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {steps.map((step, index) => {
             const IconComponent = step.icon;
             const isActive = activeStep === index;
+            const isVisible = visibleSteps.has(index);
             
             return (
               <div
                 key={step.id}
-                className={`relative p-6 rounded-xl border-2 transition-all duration-300 cursor-pointer hover:scale-105 ${
-                  getColorClasses(step.color, isActive)
-                }`}
+                data-step={index}
+                className={`relative p-6 rounded-xl border-2 transition-all duration-700 cursor-pointer group
+                  ${getColorClasses(step.color, isActive)}
+                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+                  hover:scale-105 hover:rotate-1 hover:shadow-2xl
+                  hover:border-opacity-80 hover:bg-opacity-90
+                  transform-gpu
+                `}
+                style={{
+                  transitionDelay: `${index * 100}ms`
+                }}
                 onClick={() => setActiveStep(index)}
+                onMouseEnter={() => {
+                  // Add ripple effect on hover
+                  const ripple = document.createElement('div');
+                  ripple.className = 'absolute inset-0 rounded-xl bg-white opacity-20 scale-0 transition-transform duration-300';
+                  ripple.style.animation = 'ripple 0.6s ease-out';
+                }}
               >
-                {/* Step Number */}
-                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-sm font-bold text-gray-700">
+                {/* Step Number with enhanced hover animation */}
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-sm font-bold text-gray-700 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12 group-hover:shadow-lg group-hover:bg-gradient-to-r group-hover:from-blue-50 group-hover:to-purple-50">
                   {step.id}
                 </div>
 
-                {/* Arrow for flow */}
+                {/* Animated Arrow */}
                 {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute -right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                    <ArrowRight className="w-6 h-6" />
+                  <div className="hidden lg:block absolute -right-3 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-300 group-hover:text-gray-600 group-hover:translate-x-1">
+                    <ArrowRight className="w-6 h-6 animate-pulse" />
                   </div>
                 )}
 
-                {/* Icon */}
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-white">
-                  <IconComponent className={`w-6 h-6 ${getIconColor(step.color)}`} />
+                {/* Icon with enhanced animations */}
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-lg">
+                  <IconComponent className={`w-6 h-6 ${getIconColor(step.color)} transition-all duration-300 group-hover:scale-125`} />
                 </div>
 
-                {/* Content */}
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {/* Content with stagger animation */}
+                <h3 className="text-xl font-semibold text-gray-800 mb-2 transition-all duration-300 group-hover:text-gray-900 group-hover:translate-x-1">
                   {step.title}
                 </h3>
-                <p className="text-gray-600 text-sm mb-4">
+                <p className="text-gray-600 text-sm mb-4 transition-all duration-300 group-hover:text-gray-700 group-hover:translate-x-1">
                   {step.description}
                 </p>
 
-                {/* Details */}
+                {/* Details with stagger animation */}
                 <ul className="space-y-1">
                   {step.details.map((detail, idx) => (
-                    <li key={idx} className="flex items-start text-xs text-gray-500">
-                      <div className="w-1 h-1 bg-gray-400 rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                    <li 
+                      key={idx} 
+                      className="flex items-start text-xs text-gray-500 transition-all duration-300 group-hover:text-gray-600 group-hover:translate-x-2"
+                      style={{
+                        transitionDelay: `${idx * 50}ms`
+                      }}
+                    >
+                      <div className="w-1 h-1 bg-gray-400 rounded-full mt-2 mr-2 flex-shrink-0 transition-all duration-300 group-hover:bg-gray-600 group-hover:scale-150"></div>
                       {detail}
                     </li>
                   ))}
                 </ul>
+
+                {/* Hover overlay effect */}
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-10 transition-opacity duration-300 -z-10"></div>
               </div>
             );
           })}
         </div>
 
-        {/* Detail View */}
-        <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center">
-              <div className={`w-12 h-12 rounded-lg mr-4 flex items-center justify-center bg-${steps[activeStep].color}-100`}>
-                {React.createElement(steps[activeStep].icon, { 
-                  className: `w-6 h-6 ${getIconColor(steps[activeStep].color)}` 
-                })}
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-gray-800">
-                  {steps[activeStep].title}
-                </h2>
-                <p className="text-gray-600">
-                  Langkah {activeStep + 1} dari {steps.length}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center text-gray-600">
-                <Users className="w-4 h-4 mr-2" />
-                <span className="text-sm">1,234 peserta</span>
-              </div>
-              <div className="flex items-center text-gray-600">
-                <Calendar className="w-4 h-4 mr-2" />
-                <span className="text-sm">~2 minggu</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <p className="text-gray-700 text-lg mb-4">
-              {steps[activeStep].description}
-            </p>
-            
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              Yang akan Anda pelajari:
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {steps[activeStep].details.map((detail, idx) => (
-                <div key={idx} className="flex items-start p-4 bg-gray-50 rounded-lg">
-                  <div className={`w-2 h-2 bg-${steps[activeStep].color}-500 rounded-full mt-2 mr-3 flex-shrink-0`}></div>
-                  <span className="text-gray-700">{detail}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <button
-              onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
-              disabled={activeStep === 0}
-              className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Sebelumnya
-            </button>
-            
-            <button
-              onClick={() => setActiveStep(Math.min(steps.length - 1, activeStep + 1))}
-              disabled={activeStep === steps.length - 1}
-              className="flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Selanjutnya
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </button>
-          </div>
-        </div>
-
-        {/* Info Box */}
-        <div className="mt-8 bg-gradient-to-r from-green-100 to-blue-100 rounded-xl p-6 border border-green-200">
+        {/* Info Box with enhanced animations */}
+        <div className="mt-8 bg-gradient-to-r from-green-100 to-blue-100 rounded-xl p-6 border border-green-200 transition-all duration-500 hover:shadow-xl hover:scale-105 hover:bg-gradient-to-r hover:from-green-200 hover:to-blue-200 group">
           <div className="flex items-start">
-            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-4 mt-1">
-              <Award className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-4 mt-1 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 group-hover:shadow-lg">
+              <Award className="w-4 h-4 text-white transition-all duration-300 group-hover:scale-125" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2 transition-all duration-300 group-hover:text-gray-900 group-hover:translate-x-1">
                 Manfaat Sertifikasi
               </h3>
               <ul className="text-gray-700 space-y-1">
-                <li>• Diakui oleh Badan Tenaga Nuklir Nasional (BATAN)</li>
-                <li>• Meningkatkan kredibilitas profesional di bidang agrikultur</li>
-                <li>• Membuka peluang karir di instansi pemerintah dan swasta</li>
-                <li>• Akses ke jaringan profesional agri nuclear Indonesia</li>
+                <li className="transition-all duration-300 group-hover:text-gray-800 group-hover:translate-x-2 hover:scale-105">• Meningkatkan kredibilitas profesional di bidang agrikultur</li>
+                <li className="transition-all duration-300 group-hover:text-gray-800 group-hover:translate-x-2 hover:scale-105" style={{transitionDelay: '50ms'}}>• Membuka peluang karir di instansi pemerintah dan swasta</li>
+                <li className="transition-all duration-300 group-hover:text-gray-800 group-hover:translate-x-2 hover:scale-105" style={{transitionDelay: '100ms'}}>• Akses ke jaringan profesional agri nuclear Indonesia</li>
               </ul>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Custom CSS for additional animations */}
+      <style jsx>{`
+        @keyframes ripple {
+          0% {
+            transform: scale(0);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(4);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+      `}</style>
     </div>
   );
 };

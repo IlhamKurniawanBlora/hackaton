@@ -51,14 +51,18 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-green-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+      <div className="max-w-lg w-full space-y-8">
         {/* Header */}
         <div className="text-center">
           <Link to="/" className="inline-flex items-center space-x-2 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center">
-              <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-              </svg>
+            <div className="mb-8 animate-fade-in-down">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-2xl mb-6 transform rotate-12 hover:rotate-0 transition-transform duration-500 overflow-hidden">
+                <img
+                  src="/icon.png"
+                  alt="AgriNuklir Logo"
+                  className="w-16 h-16 object-contain"
+                />
+              </div>
             </div>
             <span className="text-2xl font-bold">
               <span className="text-orange-600">Agri</span>
@@ -76,7 +80,7 @@ function Login() {
 
         {/* Form */}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+          <div className="bg-white p-10 rounded-xl shadow-lg border border-gray-200">
             <div className="space-y-6">
               {/* Error Message */}
               {error && (
@@ -140,16 +144,6 @@ function Login() {
                     )}
                   </button>
                 </div>
-              </div>
-
-              {/* Forgot Password Link */}
-              <div className="flex justify-end">
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-orange-600 hover:text-orange-500 font-medium"
-                >
-                  Lupa password?
-                </Link>
               </div>
 
               {/* Submit Button */}

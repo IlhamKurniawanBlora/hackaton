@@ -33,10 +33,14 @@ function AboutSection() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full mb-6 shadow-2xl">
-            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-            </svg>
+           <div className="mb-8 animate-fade-in-down">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-2xl mb-6 transform rotate-12 hover:rotate-0 transition-transform duration-500 overflow-hidden">
+              <img
+                src="/icon.png"
+                alt="AgriNuklir Logo"
+                className="w-20 h-20 object-contain"
+              />
+            </div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-emerald-700">Tentang </span>

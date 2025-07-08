@@ -1,149 +1,149 @@
-// src/components/common/Footer.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <footer className="footer bg-gradient-to-t from-slate-900 via-emerald-900 to-green-800 border-t-2 border-orange-400">
-      <div className="footer-inner container mx-auto px-4 py-12">
-        <div className="footer-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+    <footer className="bg-gradient-to-t from-slate-900 via-emerald-900 to-green-800 border-t-2 border-orange-400">
+      <div className="container mx-auto px-4 py-8 lg:py-12">
+        
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           
-          {/* Bagian 1: Informasi Platform */}
-          <div className="footer-col footer-info lg:col-span-1">
+          {/* Brand Section */}
+          <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
-             <div className="animate-fade-in-down mb-4">
-                <div className="inline-flex items-center justify-center w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-md overflow-hidden transform rotate-12 hover:rotate-0 transition-transform duration-500">
-                  <img
-                    src="/icon.png"
-                    alt="AgriNuklir Icon"
-                    className="w-8 h-8 object-contain"
-                  />
-                </div>
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-md overflow-hidden transform rotate-12 hover:rotate-0 transition-transform duration-500">
+                <img
+                  src="/icon.png"
+                  alt="AgriNuklir Icon"
+                  className="w-8 h-8 object-contain"
+                />
               </div>
-
-
-              <h3 className="footer-logo-title text-xl font-bold">
+              <h3 className="text-xl font-bold">
                 <span className="text-orange-300">Agri</span>
                 <span className="text-emerald-300">Nuklir</span>
               </h3>
             </div>
-            <p className="footer-description text-gray-300 text-sm leading-relaxed mb-6">
-              Inovasi pertanian masa depan dengan pemanfaatan teknologi nuklir untuk ketahanan pangan yang berkelanjutan.
+            <p className="text-gray-300 text-sm leading-relaxed mb-6">
+              Platform pembelajaran teknologi nuklir untuk pertanian berkelanjutan dan ketahanan pangan Indonesia.
             </p>
-            <div className="social-icons flex space-x-3">
-              <a href="#" className="social-icon p-2 bg-green-700 hover:bg-orange-500 rounded-full transition-colors duration-300">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
+            
+            {/* Social Icons */}
+            <div className="flex space-x-3">
+              <a href="#" className="p-2 bg-green-700 hover:bg-orange-500 rounded-full transition-all duration-300 hover:scale-110">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
                 </svg>
               </a>
-              <a href="#" className="social-icon p-2 bg-green-700 hover:bg-orange-500 rounded-full transition-colors duration-300">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clipRule="evenodd"/>
+              <a href="#" className="p-2 bg-green-700 hover:bg-orange-500 rounded-full transition-all duration-300 hover:scale-110">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
                 </svg>
               </a>
-              <a href="#" className="social-icon p-2 bg-green-700 hover:bg-orange-500 rounded-full transition-colors duration-300">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/>
+              <a href="#" className="p-2 bg-green-700 hover:bg-orange-500 rounded-full transition-all duration-300 hover:scale-110">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
                 </svg>
               </a>
             </div>
           </div>
 
-          {/* Bagian 2: Tautan Cepat */}
-          <div className="footer-col">
-            <h3 className="footer-heading text-lg font-semibold text-white mb-4 flex items-center">
+          {/* Quick Links */}
+          <div className="md:col-span-1">
+            <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
               <svg className="w-5 h-5 text-orange-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"/>
               </svg>
-              Tautan Cepat
+              Menu Utama
             </h3>
-            <ul className="footer-list space-y-2">
-              <li><Link to="/" className="footer-link text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm">Beranda</Link></li>
-              <li><Link to="/modules" className="footer-link text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm">Modul Edukasi</Link></li>
-              <li><Link to="/simulations" className="footer-link text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm">Simulasi Interaktif</Link></li>
-              <li><Link to="/chatbot" className="footer-link text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm">Chatbot AI</Link></li>
-              <li><Link to="/forum" className="footer-link text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm">Forum Komunitas</Link></li>
-              <li><Link to="/certificates" className="footer-link text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm">Sertifikat</Link></li>
-            </ul>
+            <div className="grid grid-cols-2 gap-2">
+              <a href="/" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Beranda</a>
+              <a href="/modules" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Modul</a>
+              <a href="/simulations" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Simulasi</a>
+              <a href="/chatbot" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Chatbot</a>
+              <a href="/forum" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Forum</a>
+              <a href="/certificates" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Sertifikat</a>
+            </div>
           </div>
 
-          {/* Bagian 3: Sumber Daya & Bantuan */}
-          <div className="footer-col">
-            <h3 className="footer-heading text-lg font-semibold text-white mb-4 flex items-center">
+          {/* Contact & Support */}
+          <div className="md:col-span-2 lg:col-span-1">
+            <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
               <svg className="w-5 h-5 text-emerald-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
               </svg>
-              Sumber Daya
+              Hubungi Kami
             </h3>
-            <ul className="footer-list space-y-2">
-              <li><Link to="/about" className="footer-link text-gray-300 hover:text-emerald-300 transition-colors duration-300 text-sm">Tentang Kami</Link></li>
-              <li><Link to="/faq" className="footer-link text-gray-300 hover:text-emerald-300 transition-colors duration-300 text-sm">FAQ</Link></li>
-              <li><Link to="/privacy-policy" className="footer-link text-gray-300 hover:text-emerald-300 transition-colors duration-300 text-sm">Kebijakan Privasi</Link></li>
-              <li><Link to="/contact" className="footer-link text-gray-300 hover:text-emerald-300 transition-colors duration-300 text-sm">Hubungi Kami</Link></li>
-              <li>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                  </svg>
+                </div>
+                <a href="mailto:info@agrinuklir.com" className="text-gray-300 hover:text-blue-300 transition-colors text-sm">
+                  info@agrinuklir.com
+                </a>
+              </div>
+              
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                  </svg>
+                </div>
+                <span className="text-gray-300 text-sm">+62 123 4567 890</span>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center mt-0.5">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
+                  </svg>
+                </div>
+                <div className="text-gray-300 text-sm">
+                  <div>Jakarta, Indonesia</div>
+                  <div className="text-xs text-gray-400 mt-1">Pusat Inovasi Pertanian</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Support Links */}
+            <div className="mt-6 pt-4 border-t border-gray-600">
+              <div className="flex flex-wrap gap-4 text-sm">
+                <a href="/about" className="text-gray-400 hover:text-emerald-300 transition-colors">Tentang</a>
+                <a href="/faq" className="text-gray-400 hover:text-emerald-300 transition-colors">FAQ</a>
+                <a href="/contact" className="text-gray-400 hover:text-emerald-300 transition-colors">Kontak</a>
                 <a 
                   href="https://www.brin.go.id/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="footer-link text-gray-300 hover:text-emerald-300 transition-colors duration-300 text-sm flex items-center"
+                  className="text-gray-400 hover:text-emerald-300 transition-colors flex items-center gap-1"
                 >
-                  BRIN 
-                  <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  BRIN
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                   </svg>
                 </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Bagian 4: Informasi Kontak */}
-          <div className="footer-col">
-            <h3 className="footer-heading text-lg font-semibold text-white mb-4 flex items-center">
-              <svg className="w-5 h-5 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-              </svg>
-              Kontak
-            </h3>
-            <div className="space-y-3">
-              <p className="footer-contact-item flex items-start space-x-2 text-sm">
-                <svg className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                </svg>
-                <span className="text-gray-300">
-                  <a href="mailto:info@agrinuklir.com" className="hover:text-blue-300 transition-colors">info@agrinuklir.com</a>
-                </span>
-              </p>
-              <p className="footer-contact-item flex items-start space-x-2 text-sm">
-                <svg className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
-                </svg>
-                <span className="text-gray-300">+62 123 4567 890</span>
-              </p>
-              <p className="footer-contact-item flex items-start space-x-2 text-sm">
-                <svg className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
-                </svg>
-                <span className="text-gray-300">Jl. Inovasi Pertanian No. 123<br />Jakarta, Indonesia</span>
-              </p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Bagian Hak Cipta */}
-        <div className="footer-copyright border-t border-gray-600 pt-6 text-center">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
-            <p className="text-gray-400 text-sm">
-              &copy; {new Date().getFullYear()} <span className="text-orange-300">Agri</span><span className="text-emerald-300">Nuklir</span> Platform. Hak Cipta Dilindungi Undang-Undang.
+        {/* Copyright */}
+        <div className="border-t border-gray-600 pt-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <p className="text-gray-400 text-sm text-center sm:text-left">
+              &copy; {new Date().getFullYear()} <span className="text-orange-300">Agri</span><span className="text-emerald-300">Nuklir</span> Platform. Semua hak dilindungi.
             </p>
-            <p className="footer-made-with text-gray-400 text-sm flex items-center">
-              Dibuat dengan 
-              <svg className="w-4 h-4 text-red-500 mx-1" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex items-center text-gray-400 text-sm">
+              <span>Dibuat dengan</span>
+              <svg className="w-4 h-4 text-red-500 mx-1 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
               </svg>
-              untuk kemajuan pertanian Indonesia
-            </p>
+              <span>untuk Indonesia</span>
+            </div>
           </div>
         </div>
       </div>
