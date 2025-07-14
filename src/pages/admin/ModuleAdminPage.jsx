@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { adminModuleService } from '~/utils/adminData';
 import FormModule from '~/components/admin/FormModule';
+import { supabase } from '~/utils/supabase';
 
 const ModuleAdminPage = () => {
   const [modules, setModules] = useState([]);
@@ -15,24 +16,43 @@ const ModuleAdminPage = () => {
     loadModules();
   }, []);
 
-  const loadModules = async () => {
-    setLoading(true);
-    setError('');
-    
-    try {
-      const result = await adminModuleService.getModules();
-      
-      if (result.success) {
-        setModules(result.data);
-      } else {
-        setError(result.error || 'Gagal memuat data modules');
-      }
-    } catch (err) {
-      setError('Terjadi kesalahan saat memuat data');
-    } finally {
-      setLoading(false);
+const loadModules = async () => {
+  setLoading(true);
+  setError('');
+
+  try {
+    const result = await adminModuleService.getModules();
+
+    if (result.success) {
+      // Konversi path image ke public URL
+      const modulesWithImageUrl = result.data.map(module => {
+        let imageUrl = null;
+        if (module.image_url) {
+          const { data } = supabase
+            .storage
+            .from('modules')
+            .getPublicUrl(module.image_url);
+          imageUrl = data?.publicUrl || null;
+        }
+
+        return {
+          ...module,
+          imageUrl,  // inilah field yang nanti dipakai di <img src=...>
+        };
+      });
+
+      setModules(modulesWithImageUrl);
+    } else {
+      setError(result.error || 'Gagal memuat data modules');
     }
-  };
+  } catch (err) {
+    setError('Terjadi kesalahan saat memuat data');
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   const handleAddModule = () => {
     setEditingModule(null);
@@ -171,9 +191,9 @@ const ModuleAdminPage = () => {
                   <tr key={module.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4">
                       <div className="flex items-center">
-                        {module.image_url && (
+                        {module.imageUrl && (
                           <img
-                            src={module.image_url}
+                            src={module.imageUrl}
                             alt={module.title}
                             className="h-10 w-10 rounded-lg object-cover mr-3"
                           />
