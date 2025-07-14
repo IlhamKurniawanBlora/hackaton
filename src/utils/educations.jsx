@@ -135,7 +135,7 @@ export const updateQuiz = async (quizId, updates) => {
 
 // ===================== CERTIFICATIONS =====================
 
-export const createCertification = async (userId, moduleId, quizId, userName, score, certificateUrl = null) => {
+export const createCertification = async (userId, moduleId, quizId, userName, score) => {
   try {
     // Generate certificate number
     const certificateNumber = `CERT-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
@@ -149,7 +149,7 @@ export const createCertification = async (userId, moduleId, quizId, userName, sc
         certificate_number: certificateNumber,
         user_name: userName,
         score,
-        certificate_url: certificateUrl
+        certificate_url: 'certificates' + certificateNumber + '.pdf' 
       })
       .select()
       .single();
