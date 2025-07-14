@@ -135,7 +135,7 @@ const loadModules = async () => {
               placeholder="Cari module..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             />
             <div className="text-sm text-gray-500 flex items-center">
               {filteredModules.length} dari {modules.length} module
@@ -143,7 +143,7 @@ const loadModules = async () => {
           </div>
           <button
             onClick={handleAddModule}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
@@ -157,7 +157,7 @@ const loadModules = async () => {
       <div className="bg-white rounded-lg shadow-sm border">
         {loading ? (
           <div className="p-8 text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-4"></div>
             <p className="text-gray-600">Memuat data...</p>
           </div>
         ) : filteredModules.length === 0 ? (
@@ -229,7 +229,7 @@ const loadModules = async () => {
                       <div className="flex space-x-2">
                         <button
                           onClick={() => handleEditModule(module)}
-                          className="text-blue-600 hover:text-blue-900"
+                          className="text-green-600 hover:text-green-900"
                         >
                           Edit
                         </button>

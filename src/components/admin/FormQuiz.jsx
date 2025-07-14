@@ -190,7 +190,7 @@ const FormQuiz = ({ initialData, onSave, onCancel, isLoading }) => {
                         type="text"
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${
                             errors.title ? 'border-red-500' : 'border-gray-300'
                         }`}
                         placeholder="Masukkan judul quiz"
@@ -215,7 +215,7 @@ const FormQuiz = ({ initialData, onSave, onCancel, isLoading }) => {
                         max="100"
                         value={formData.passing_score}
                         onChange={(e) => setFormData({ ...formData, passing_score: parseInt(e.target.value) || 70 })}
-                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${
                             errors.passing_score ? 'border-red-500' : 'border-gray-300'
                         }`}
                         disabled={isLoading}
@@ -237,7 +237,7 @@ const FormQuiz = ({ initialData, onSave, onCancel, isLoading }) => {
                         <button
                             type="button"
                             onClick={addQuestion}
-                            className="flex items-center space-x-1 px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
+                            className="flex items-center space-x-1 px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm"
                             disabled={isLoading}
                         >
                             <Plus size={14} />
@@ -256,7 +256,7 @@ const FormQuiz = ({ initialData, onSave, onCancel, isLoading }) => {
                         {formData.questions.map((question, qIndex) => (
                             <div key={qIndex} className="border border-gray-200 rounded-lg p-4">
                                 <div className="flex items-start justify-between mb-3">
-                                    <span className="bg-blue-100 text-blue-800 text-sm font-medium px-2 py-1 rounded">
+                                    <span className="bg-green-100 text-green-800 text-sm font-medium px-2 py-1 rounded">
                                         Pertanyaan {qIndex + 1}
                                     </span>
                                     {formData.questions.length > 1 && (
@@ -276,7 +276,7 @@ const FormQuiz = ({ initialData, onSave, onCancel, isLoading }) => {
                                     <textarea
                                         value={question.question}
                                         onChange={(e) => handleQuestionChange(qIndex, e.target.value)}
-                                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${
                                             errors[`question_${qIndex}`] ? 'border-red-500' : 'border-gray-300'
                                         }`}
                                         placeholder="Masukkan pertanyaan"
@@ -324,7 +324,7 @@ const FormQuiz = ({ initialData, onSave, onCancel, isLoading }) => {
                                                     type="text"
                                                     value={answer}
                                                     onChange={(e) => handleAnswerChange(qIndex, aIndex, e.target.value)}
-                                                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                                                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${
                                                         errors[`answers_${qIndex}`] ? 'border-red-500' : 'border-gray-300'
                                                     }`}
                                                     placeholder={`Jawaban ${aIndex + 1}`}
@@ -364,7 +364,7 @@ const FormQuiz = ({ initialData, onSave, onCancel, isLoading }) => {
                                         <select
                                             value={question.correct}
                                             onChange={(e) => handleCorrectAnswerChange(qIndex, parseInt(e.target.value))}
-                                            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                                             disabled={isLoading}
                                         >
                                             {question.answers.map((_, index) => (
@@ -399,7 +399,7 @@ const FormQuiz = ({ initialData, onSave, onCancel, isLoading }) => {
                     <button
                         type="submit"
                         className={`px-4 py-2 rounded-lg text-white ${
-                            isLoading ? 'bg-blue-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                            isLoading ? 'bg-green-300 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
                         }`}
                         disabled={isLoading}
                     >

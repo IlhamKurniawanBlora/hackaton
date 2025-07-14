@@ -214,9 +214,9 @@ const CertificatePage = () => {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Memuat sertifikat...</p>
         </div>
       </div>
@@ -226,14 +226,14 @@ const CertificatePage = () => {
   // Error state
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center max-w-md">
           <Award className="h-16 w-16 text-gray-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Sertifikat Tidak Ditemukan</h2>
           <p className="text-gray-600 mb-6">{error}</p>
           <button
             onClick={() => window.history.back()}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
             Kembali
           </button>
@@ -243,13 +243,13 @@ const CertificatePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 py-8">
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8">
           <button
             onClick={() => window.history.back()}
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4"
+            className="inline-flex items-center text-green-600 hover:text-green-800 mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Kembali
@@ -267,18 +267,18 @@ const CertificatePage = () => {
                 <Award className="h-12 w-12 text-white" />
               </div>
             </div>
-            <h2 className="text-4xl font-bold text-blue-900 mb-2">CERTIFICATE OF COMPLETION</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
+            <h2 className="text-4xl font-bold text-green-900 mb-2">CERTIFICATE OF COMPLETION</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-purple-500 mx-auto"></div>
           </div>
 
           {/* Certificate Body */}
           <div className="text-center mb-8">
             <p className="text-lg text-gray-600 mb-4">This is to certify that</p>
-            <h3 className="text-3xl font-bold text-gray-900 mb-6 text-blue-900">
+            <h3 className="text-3xl font-bold text-gray-900 mb-6 text-green-900">
               {certification.user_name}
             </h3>
             <p className="text-lg text-gray-600 mb-4">has successfully completed the course</p>
-            <h4 className="text-2xl font-semibold text-blue-800 mb-6">
+            <h4 className="text-2xl font-semibold text-green-800 mb-6">
               {moduleData?.title}
             </h4>
             
@@ -312,7 +312,7 @@ const CertificatePage = () => {
             <div className="w-16 h-16 bg-yellow-400 rounded-full"></div>
           </div>
           <div className="absolute top-8 right-8 opacity-10">
-            <div className="w-16 h-16 bg-blue-400 rounded-full"></div>
+            <div className="w-16 h-16 bg-green-400 rounded-full"></div>
           </div>
         </div>
 
@@ -321,7 +321,7 @@ const CertificatePage = () => {
           <button
             onClick={downloadCertificate}
             disabled={isDownloading}
-            className="flex items-center justify-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center justify-center px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isDownloading ? (
               <>
@@ -357,7 +357,7 @@ const CertificatePage = () => {
               </div>
             </div>
             <div className="flex items-center">
-              <Award className="h-5 w-5 text-blue-600 mr-3" />
+              <Award className="h-5 w-5 text-green-600 mr-3" />
               <div>
                 <p className="font-medium text-gray-900">Achievement</p>
                 <p className="text-sm text-gray-600">Course Completion</p>

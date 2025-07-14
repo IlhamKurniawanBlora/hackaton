@@ -3,14 +3,14 @@ import { Home, Search, ArrowLeft, Leaf, Atom, AlertTriangle, Zap } from 'lucide-
 
 function NotFoundPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-green-50 to-emerald-50 flex items-center justify-center p-6">
       <div className="max-w-4xl mx-auto text-center">
         
         {/* Animated 404 Section */}
         <div className="relative mb-12">
           {/* Background decoration */}
           <div className="absolute inset-0 flex items-center justify-center opacity-10">
-            <div className="w-96 h-96 rounded-full bg-gradient-to-r from-green-400 to-blue-400 blur-3xl animate-pulse"></div>
+            <div className="w-96 h-96 rounded-full bg-gradient-to-r from-green-400 to-green-400 blur-3xl animate-pulse"></div>
           </div>
           
           {/* Main 404 Display */}
@@ -18,9 +18,9 @@ function NotFoundPage() {
             <div className="flex items-center justify-center space-x-8 mb-8">
               <div className="relative">
                 <Leaf className="w-24 h-24 text-green-500 animate-bounce" style={{ animationDelay: '0s' }} />
-                <Atom className="w-12 h-12 text-blue-500 absolute -top-2 -right-2 animate-spin" style={{ animationDuration: '3s' }} />
+                <Atom className="w-12 h-12 text-green-500 absolute -top-2 -right-2 animate-spin" style={{ animationDuration: '3s' }} />
               </div>
-              <div className="text-9xl md:text-[12rem] font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-blue-600 bg-clip-text text-transparent animate-pulse">
+              <div className="text-9xl md:text-[12rem] font-bold bg-gradient-to-r from-green-600 via-emerald-500 to-green-600 bg-clip-text text-transparent animate-pulse">
                 404
               </div>
               <div className="relative">
@@ -37,7 +37,7 @@ function NotFoundPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
               Halaman Tidak Ditemukan
             </h1>
-            <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full mb-6"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-green-500 mx-auto rounded-full mb-6"></div>
           </div>
 
           <div className="max-w-2xl mx-auto mb-12">
@@ -62,7 +62,7 @@ function NotFoundPage() {
             
             <button
               onClick={() => window.location.href = '/research'}
-              className="group bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center space-x-3"
+              className="group bg-gradient-to-r from-green-600 to-cyan-600 hover:from-green-700 hover:to-cyan-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center space-x-3"
             >
               <Search className="w-5 h-5 group-hover:animate-pulse" />
               <span>Jelajahi Penelitian</span>
@@ -82,7 +82,7 @@ function NotFoundPage() {
                 <button
                   key={index}
                   onClick={() => window.location.href = link.to}
-                  className="group bg-gradient-to-br from-gray-50 to-gray-100 hover:from-green-50 hover:to-blue-50 p-4 rounded-xl border border-gray-200 hover:border-green-300 transition-all duration-300 hover:shadow-md"
+                  className="group bg-gradient-to-br from-gray-50 to-gray-100 hover:from-green-50 hover:to-green-50 p-4 rounded-xl border border-gray-200 hover:border-green-300 transition-all duration-300 hover:shadow-md"
                 >
                   <div className="text-2xl mb-2 group-hover:animate-bounce">{link.icon}</div>
                   <div className="text-sm font-medium text-gray-700 group-hover:text-green-700">
@@ -95,9 +95,9 @@ function NotFoundPage() {
         </div>
 
         {/* Fun Nuclear Facts */}
-        <div className="mt-12 bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl p-8 border border-green-200">
+        <div className="mt-12 bg-gradient-to-r from-green-100 to-green-100 rounded-2xl p-8 border border-green-200">
           <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center justify-center space-x-2">
-            <Atom className="w-6 h-6 text-blue-600" />
+            <Atom className="w-6 h-6 text-green-600" />
             <span>Fakta Menarik AgriNuklir</span>
           </h3>
           <div className="grid md:grid-cols-3 gap-6 text-sm">

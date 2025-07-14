@@ -114,9 +114,9 @@ const EducationModulePage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 flex items-center justify-center">
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600 mx-auto mb-4"></div>
+                    <div className="animate-spin rounded-full h-16 w-16 border-4 border-green-200 border-t-green-600 mx-auto mb-4"></div>
                     <p className="text-gray-600 font-medium">Loading module...</p>
                 </div>
             </div>
@@ -125,12 +125,12 @@ const EducationModulePage = () => {
 
     if (!module || !moduleDetails.length) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 flex items-center justify-center">
                 <div className="text-center bg-white rounded-xl shadow-xl p-8 max-w-md">
                     <BookOpen className="w-16 h-16 text-red-600 mx-auto mb-4" />
                     <h2 className="text-2xl font-bold text-gray-800 mb-2">Module Not Found</h2>
                     <p className="text-gray-600 mb-4">The requested module could not be found.</p>
-                    <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                    <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
                         Browse Modules
                     </button>
                 </div>
@@ -139,7 +139,7 @@ const EducationModulePage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100">
             {/* Header */}
             <header className="bg-white shadow-lg sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -150,7 +150,7 @@ const EducationModulePage = () => {
                                 <span className="hidden sm:inline">Back</span>
                             </button>
                             <div className="flex items-center space-x-2">
-                                <Timer className="w-4 h-4 text-blue-600" />
+                                <Timer className="w-4 h-4 text-green-600" />
                                 <span className="text-sm font-medium">{formatTime(readingTime)}</span>
                             </div>
                         </div>
@@ -160,7 +160,7 @@ const EducationModulePage = () => {
                                 <TrendingUp className="w-4 h-4 text-green-600" />
                                 <div className="w-32 bg-gray-200 rounded-full h-2.5">
                                     <div 
-                                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2.5 rounded-full"
+                                        className="bg-gradient-to-r from-green-500 to-purple-600 h-2.5 rounded-full"
                                         style={{ width: `${getCompletionPercentage()}%` }}
                                     ></div>
                                 </div>
@@ -169,14 +169,14 @@ const EducationModulePage = () => {
                             
                             <div className="flex items-center space-x-2">
                                 <button onClick={() => setIsBookmarked(!isBookmarked)} className="p-2 rounded-lg hover:bg-gray-100">
-                                    {isBookmarked ? <BookmarkCheck className="w-5 h-5 text-blue-600" /> : <Bookmark className="w-5 h-5 text-gray-500" />}
+                                    {isBookmarked ? <BookmarkCheck className="w-5 h-5 text-green-600" /> : <Bookmark className="w-5 h-5 text-gray-500" />}
                                 </button>
                                 <button className="p-2 rounded-lg hover:bg-gray-100">
                                     <Share2 className="w-5 h-5 text-gray-500" />
                                 </button>
                                 <button 
                                     onClick={() => setSidebarOpen(!sidebarOpen)}
-                                    className="lg:hidden p-2 rounded-lg bg-blue-600 text-white"
+                                    className="lg:hidden p-2 rounded-lg bg-green-600 text-white"
                                 >
                                     {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                                 </button>
@@ -194,7 +194,7 @@ const EducationModulePage = () => {
                             {/* Module Header */}
                             <div className="p-6">
                                 <div className="flex items-center space-x-2 mb-2">
-                                    <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs">{module.level || 'Beginner'}</span>
+                                    <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs">{module.level || 'Beginner'}</span>
                                     <div className="flex items-center space-x-1">
                                         <Star className="w-4 h-4 text-yellow-400 fill-current" />
                                         <span className="text-sm font-medium">{module.rating || '4.8'}</span>
@@ -206,7 +206,7 @@ const EducationModulePage = () => {
                                 {/* Stats */}
                                 <div className="grid grid-cols-2 gap-4 mb-4">
                                     <div className="flex items-center space-x-2">
-                                        <Clock className="w-4 h-4 text-blue-600" />
+                                        <Clock className="w-4 h-4 text-green-600" />
                                         <span className="text-sm text-gray-600">{module.duration || 'Self-paced'}</span>
                                     </div>
                                     <div className="flex items-center space-x-2">
@@ -223,7 +223,7 @@ const EducationModulePage = () => {
                                     </div>
                                     <div className="w-full bg-gray-200 rounded-full h-2.5">
                                         <div 
-                                            className="bg-gradient-to-r from-blue-500 to-purple-600 h-2.5 rounded-full"
+                                            className="bg-gradient-to-r from-green-500 to-purple-600 h-2.5 rounded-full"
                                             style={{ width: `${getCompletionPercentage()}%` }}
                                         ></div>
                                     </div>
@@ -246,7 +246,7 @@ const EducationModulePage = () => {
                                             onClick={() => handleDetailChange(index)}
                                             className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
                                                 currentDetailIndex === index
-                                                    ? 'border-blue-500 bg-blue-50'
+                                                    ? 'border-green-500 bg-green-50'
                                                     : 'border-gray-200 hover:border-gray-300'
                                             }`}
                                         >
@@ -255,7 +255,7 @@ const EducationModulePage = () => {
                                                     readingProgress[detail.id] 
                                                         ? 'bg-green-500 text-white' 
                                                         : currentDetailIndex === index
-                                                        ? 'bg-blue-500 text-white'
+                                                        ? 'bg-green-500 text-white'
                                                         : 'bg-gray-200 text-gray-500'
                                                 }`}>
                                                     {readingProgress[detail.id] ? (
@@ -268,7 +268,7 @@ const EducationModulePage = () => {
                                                     <p className="font-medium text-sm">{detail.title}</p>
                                                     <p className="text-xs text-gray-500">Chapter {index + 1}</p>
                                                 </div>
-                                                {currentDetailIndex === index && <Play className="w-4 h-4 text-blue-600" />}
+                                                {currentDetailIndex === index && <Play className="w-4 h-4 text-green-600" />}
                                             </div>
                                         </button>
                                     ))}
@@ -281,10 +281,10 @@ const EducationModulePage = () => {
                     <div className="lg:col-span-8 mt-8 lg:mt-0">
                         <div className="bg-white rounded-xl shadow-xl overflow-hidden">
                             {/* Content Header */}
-                            <div className="px-6 py-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                            <div className="px-6 py-4 border-b bg-gradient-to-r from-green-50 to-indigo-50">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+                                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
                                             Chapter {currentDetailIndex + 1} of {moduleDetails.length}
                                         </span>
                                         <h2 className="text-xl font-bold text-gray-900 mt-2">{currentDetail?.title}</h2>
@@ -311,7 +311,7 @@ const EducationModulePage = () => {
                             {/* Content Body */}
                             <div className="p-6">
                                 <div 
-                                    className="prose max-w-none prose-blue prose-headings:text-gray-900 prose-p:text-gray-700"
+                                    className="prose max-w-none prose-green prose-headings:text-gray-900 prose-p:text-gray-700"
                                     dangerouslySetInnerHTML={{ 
                                         __html: currentDetail?.content || '<p>No content available.</p>' 
                                     }}
@@ -345,7 +345,7 @@ const EducationModulePage = () => {
                                     ) : (
                                         <button
                                             onClick={handleNextDetail}
-                                            className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                                            className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700"
                                         >
                                             <span>Next</span>
                                             <ChevronRight className="w-4 h-4" />

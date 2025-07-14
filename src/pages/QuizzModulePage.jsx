@@ -159,7 +159,7 @@ const { moduleId } = useParams();
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Memuat quiz...</p>
         </div>
       </div>
@@ -176,7 +176,7 @@ const { moduleId } = useParams();
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={() => window.history.back()}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
           >
             Kembali
           </button>
@@ -214,8 +214,8 @@ const { moduleId } = useParams();
 
             {/* Score Summary */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-blue-50 p-4 rounded-lg text-center">
-                <div className="text-2xl font-bold text-blue-600">{summary.percentage}%</div>
+              <div className="bg-green-50 p-4 rounded-lg text-center">
+                <div className="text-2xl font-bold text-green-600">{summary.percentage}%</div>
                 <div className="text-sm text-gray-600">Nilai Anda</div>
               </div>
               <div className="bg-green-50 p-4 rounded-lg text-center">
@@ -279,7 +279,7 @@ const { moduleId } = useParams();
               {!summary.passed && (
                 <button
                   onClick={() => window.location.reload()}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                 >
                   Ulangi Quiz
                 </button>
@@ -303,8 +303,8 @@ const { moduleId } = useParams();
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="text-center p-4 bg-blue-50 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">{quiz.questions.length}</div>
+              <div className="text-center p-4 bg-green-50 rounded-lg">
+                <div className="text-2xl font-bold text-green-600">{quiz.questions.length}</div>
                 <div className="text-sm text-gray-600">Pertanyaan</div>
               </div>
               <div className="text-center p-4 bg-green-50 rounded-lg">
@@ -333,7 +333,7 @@ const { moduleId } = useParams();
             <div className="text-center">
               <button
                 onClick={startQuiz}
-                className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold"
+                className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-lg font-semibold"
               >
                 Mulai Quiz
               </button>
@@ -371,7 +371,7 @@ const { moduleId } = useParams();
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div 
-                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                className="bg-green-600 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
@@ -385,7 +385,7 @@ const { moduleId } = useParams();
                 onClick={() => goToQuestion(index)}
                 className={`w-8 h-8 rounded-full text-sm font-medium transition-colors ${
                   index === currentQuestion
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-green-600 text-white'
                     : userAnswers[index] !== null
                     ? 'bg-green-100 text-green-700 hover:bg-green-200'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -410,7 +410,7 @@ const { moduleId } = useParams();
                 onClick={() => handleAnswerSelect(index)}
                 className={`w-full text-left p-4 rounded-lg border-2 transition-colors ${
                   userAnswers[currentQuestion] === index
-                    ? 'border-blue-500 bg-blue-50 text-blue-900'
+                    ? 'border-green-500 bg-green-50 text-green-900'
                     : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                 }`}
               >
@@ -454,7 +454,7 @@ const { moduleId } = useParams();
             ) : (
               <button
                 onClick={nextQuestion}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
               >
                 Selanjutnya
                 <ArrowRight className="h-4 w-4 ml-2" />

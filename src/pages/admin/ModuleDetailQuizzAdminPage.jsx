@@ -153,7 +153,7 @@ const ModuleQuizAdminPage = ({ moduleId }) => {
     if (isLoading) {
         return (
             <div className="min-h-screen bg-gray-50 flex justify-center items-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
             </div>
         );
     }
@@ -260,7 +260,7 @@ const ModuleQuizAdminPage = ({ moduleId }) => {
                         <button
                             onClick={handleAddQuiz}
                             disabled={isSubmitting}
-                            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                            className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
                         >
                             <Plus size={16} />
                             <span>Buat Quiz</span>
@@ -331,7 +331,7 @@ const ModuleQuizAdminPage = ({ moduleId }) => {
                             {quiz.questions?.map((question, index) => (
                                 <div key={index} className="border border-gray-200 rounded-lg p-4">
                                     <div className="flex items-start space-x-3">
-                                        <span className="bg-blue-100 text-blue-800 text-sm font-medium px-2 py-1 rounded">
+                                        <span className="bg-green-100 text-green-800 text-sm font-medium px-2 py-1 rounded">
                                             {index + 1}
                                         </span>
                                         <div className="flex-1">
@@ -390,7 +390,7 @@ const ModuleQuizAdminPage = ({ moduleId }) => {
                         <h3 className="text-lg font-bold text-gray-900 mb-4">Statistik Quiz</h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-blue-600">
+                                <div className="text-2xl font-bold text-green-600">
                                     {quiz.questions?.length || 0}
                                 </div>
                                 <div className="text-sm text-gray-500">Total Pertanyaan</div>

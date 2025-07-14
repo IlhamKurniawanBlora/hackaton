@@ -155,7 +155,7 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-50 flex items-center justify-center">
         <div className="flex items-center space-x-2">
           <Loader2 className="w-8 h-8 animate-spin text-green-600" />
           <span className="text-lg font-medium text-gray-700">Memuat data...</span>
@@ -165,7 +165,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-50">
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -183,7 +183,7 @@ const ProfilePage = () => {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-green-400 to-blue-400 flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-400 flex items-center justify-center">
                       <User className="w-12 h-12 text-white" />
                     </div>
                   )}

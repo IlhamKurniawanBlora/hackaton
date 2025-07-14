@@ -20,7 +20,7 @@ import FormForum from '~/components/FormForum.jsx';
 const categoryColors = {
   'Diskusi': 'bg-green-100 text-green-800 border-green-200',
   'Tanya Jawab': 'bg-orange-100 text-orange-800 border-orange-200',
-  'Pengalaman': 'bg-blue-100 text-blue-800 border-blue-200',
+  'Pengalaman': 'bg-green-100 text-green-800 border-green-200',
   'Ide': 'bg-purple-100 text-purple-800 border-purple-200',
   'Masukan': 'bg-yellow-100 text-yellow-800 border-yellow-200',
 };
@@ -477,7 +477,7 @@ function ForumPage() {
                                 <div className="flex items-center gap-2">
                                   <button
                                     onClick={() => startEditComment(comment)}
-                                    className="text-gray-400 hover:text-blue-600 transition-colors duration-200"
+                                    className="text-gray-400 hover:text-green-600 transition-colors duration-200"
                                     disabled={editingComment === comment.id}
                                   >
                                     <PencilIcon className="w-4 h-4" />

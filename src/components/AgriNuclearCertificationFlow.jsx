@@ -42,7 +42,7 @@ const AgriNuclearCertificationFlow = () => {
       title: "Akses Modules",
       description: "Daftar dan akses modul pembelajaran agri nuclear",
       icon: BookOpen,
-      color: "blue",
+      color: "green",
       details: [
         "Pendaftaran akun pembelajaran",
         "Akses ke perpustakaan modul",
@@ -113,7 +113,7 @@ const AgriNuclearCertificationFlow = () => {
 
   const getColorClasses = (color, isActive) => {
     const colors = {
-      blue: isActive ? 'bg-blue-100 border-blue-400 shadow-lg' : 'bg-blue-50 border-blue-200',
+      green: isActive ? 'bg-green-100 border-green-400 shadow-lg' : 'bg-green-50 border-green-200',
       green: isActive ? 'bg-green-100 border-green-400 shadow-lg' : 'bg-green-50 border-green-200',
       purple: isActive ? 'bg-purple-100 border-purple-400 shadow-lg' : 'bg-purple-50 border-purple-200',
       yellow: isActive ? 'bg-yellow-100 border-yellow-400 shadow-lg' : 'bg-yellow-50 border-yellow-200',
@@ -125,7 +125,7 @@ const AgriNuclearCertificationFlow = () => {
 
   const getIconColor = (color) => {
     const colors = {
-      blue: 'text-blue-600',
+      green: 'text-green-600',
       green: 'text-green-600',
       purple: 'text-purple-600',
       yellow: 'text-yellow-600',
@@ -187,7 +187,7 @@ const AgriNuclearCertificationFlow = () => {
                 }}
               >
                 {/* Step Number with enhanced hover animation */}
-                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-sm font-bold text-gray-700 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12 group-hover:shadow-lg group-hover:bg-gradient-to-r group-hover:from-blue-50 group-hover:to-purple-50">
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center text-sm font-bold text-gray-700 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12 group-hover:shadow-lg group-hover:bg-gradient-to-r group-hover:from-green-50 group-hover:to-purple-50">
                   {step.id}
                 </div>
 
@@ -235,7 +235,7 @@ const AgriNuclearCertificationFlow = () => {
         </div>
 
         {/* Info Box with enhanced animations */}
-        <div className="mt-8 bg-gradient-to-r from-green-100 to-blue-100 rounded-xl p-6 border border-green-200 transition-all duration-500 hover:shadow-xl hover:scale-105 hover:bg-gradient-to-r hover:from-green-200 hover:to-blue-200 group">
+        <div className="mt-8 bg-gradient-to-r from-green-100 to-green-100 rounded-xl p-6 border border-green-200 transition-all duration-500 hover:shadow-xl hover:scale-105 hover:bg-gradient-to-r hover:from-green-200 hover:to-green-200 group">
           <div className="flex items-start">
             <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-4 mt-1 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 group-hover:shadow-lg">
               <Award className="w-4 h-4 text-white transition-all duration-300 group-hover:scale-125" />

@@ -41,7 +41,7 @@ const Star = ({ filled }) => (
 
 const Loading = () => (
   <div className="flex justify-center items-center min-h-screen">
-    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
   </div>
 );
 
@@ -61,7 +61,7 @@ const CommentCard = ({ comment, onEdit, onDelete, currentUserId }) => {
     <div className="bg-white rounded-lg p-4 shadow border">
       <div className="flex justify-between items-start mb-3">
         <div className="flex items-center">
-          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+          <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
             <User className="w-4 h-4 text-white" />
           </div>
           <div>
@@ -71,7 +71,7 @@ const CommentCard = ({ comment, onEdit, onDelete, currentUserId }) => {
         </div>
         {canEdit && (
           <div className="flex gap-2">
-            <button onClick={() => setIsEditing(!isEditing)} className="text-blue-600 text-sm">
+            <button onClick={() => setIsEditing(!isEditing)} className="text-green-600 text-sm">
               Edit
             </button>
             <button onClick={() => onDelete(comment.id)} className="text-red-600 text-sm">
@@ -103,11 +103,11 @@ const CommentCard = ({ comment, onEdit, onDelete, currentUserId }) => {
           <textarea
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
-            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border rounded focus:ring-2 focus:ring-green-500"
             rows="3"
           />
           <div className="flex gap-2">
-            <button onClick={handleSave} className="px-3 py-1 bg-blue-600 text-white rounded text-sm">
+            <button onClick={handleSave} className="px-3 py-1 bg-green-600 text-white rounded text-sm">
               Save
             </button>
             <button onClick={() => setIsEditing(false)} className="px-3 py-1 bg-gray-300 rounded text-sm">
@@ -201,7 +201,7 @@ function ModuleDetailPage() {
           <h2 className="text-2xl font-bold text-gray-600 mb-4">{error}</h2>
           <button
             onClick={() => navigate('/modules')}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+            className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
           >
             Back to Modules
           </button>
@@ -218,7 +218,7 @@ function ModuleDetailPage() {
           <h2 className="text-2xl font-bold text-gray-600 mb-4">Module not found</h2>
           <button
             onClick={() => navigate('/modules')}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+            className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
           >
             Back to Modules
           </button>
@@ -234,7 +234,7 @@ function ModuleDetailPage() {
         <div className="container mx-auto px-4 py-4">
           <button
             onClick={() => navigate('/modules')}
-            className="flex items-center text-blue-600 hover:text-blue-800"
+            className="flex items-center text-green-600 hover:text-green-800"
           >
             <ArrowLeft className="mr-2" />
             Back to Modules
@@ -248,7 +248,7 @@ function ModuleDetailPage() {
           <div className="md:flex">
             {/* Image */}
             <div className="md:w-1/2">
-              <div className="h-64 md:h-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+              <div className="h-64 md:h-full bg-gradient-to-br from-green-400 to-indigo-500 flex items-center justify-center">
                 {module.imageUrl ? (
                   <img src={module.imageUrl} alt={module.title} className="w-full h-full object-cover" />
                 ) : (
@@ -259,7 +259,7 @@ function ModuleDetailPage() {
 
             {/* Content */}
             <div className="md:w-1/2 p-8">
-              <span className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
+              <span className="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-medium">
                 {module.level}
               </span>
               <h1 className="text-3xl font-bold text-gray-800 mt-4 mb-4">{module.title}</h1>
@@ -277,7 +277,7 @@ function ModuleDetailPage() {
                       </div>
 
                       <button
-                      className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700"
+                      className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700"
                       onClick={() => navigate(`/educations/${module.id}`)}
                       >
                       Start Learning
@@ -310,7 +310,7 @@ function ModuleDetailPage() {
               <textarea
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500"
                 rows="4"
                 placeholder="Share your thoughts about this module..."
               />
@@ -318,7 +318,7 @@ function ModuleDetailPage() {
             <button
               type="submit"
               disabled={!newComment.trim()}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50"
             >
               Add Comment
             </button>

@@ -84,7 +84,7 @@ const ModuleDataAdminPage = () => {
             <button
               onClick={handleRefresh}
               disabled={isLoading}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
             >
               <RefreshCw size={16} className={isLoading ? 'animate-spin' : ''} />
               <span>Refresh</span>
@@ -101,7 +101,7 @@ const ModuleDataAdminPage = () => {
               placeholder="Cari module..."
               value={searchTerm}
               onChange={handleSearch}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
         </div>
@@ -122,7 +122,7 @@ const ModuleDataAdminPage = () => {
         {/* Loading State */}
         {isLoading && (
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
           </div>
         )}
 
@@ -141,7 +141,7 @@ const ModuleDataAdminPage = () => {
                       e.target.src = '';
                     }}
                   />
-                  <div className="absolute top-2 right-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs flex items-center">
+                  <div className="absolute top-2 right-2 bg-green-600 text-white px-2 py-1 rounded-full text-xs flex items-center">
                     <BookOpen size={12} className="mr-1" />
                     {module.modules_count || 0} Detail
                   </div>
@@ -167,7 +167,7 @@ const ModuleDataAdminPage = () => {
                   {/* Action Button */}
                   <button
                     onClick={() => handleViewDetail(module.id)}
-                    className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                   >
                     <Eye size={16} />
                     <span>Lihat Detail</span>
@@ -197,7 +197,7 @@ const ModuleDataAdminPage = () => {
             <h3 className="text-lg font-bold text-gray-900 mb-4">Statistik</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">{modules.length}</div>
+                <div className="text-2xl font-bold text-green-600">{modules.length}</div>
                 <div className="text-sm text-gray-500">Total Module</div>
               </div>
               <div className="text-center">

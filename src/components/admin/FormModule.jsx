@@ -167,7 +167,7 @@ const FormModule = ({ moduleId = null, onClose, onSuccess }) => {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             required
             disabled={loading}
           />
@@ -183,7 +183,7 @@ const FormModule = ({ moduleId = null, onClose, onSuccess }) => {
             value={formData.description}
             onChange={handleInputChange}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             disabled={loading}
           />
         </div>
@@ -197,7 +197,7 @@ const FormModule = ({ moduleId = null, onClose, onSuccess }) => {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             disabled={loading}
           />
           {formData.image_url && (
@@ -220,7 +220,7 @@ const FormModule = ({ moduleId = null, onClose, onSuccess }) => {
             name="level"
             value={formData.level}
             onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             required
             disabled={loading}
           >
@@ -240,7 +240,7 @@ const FormModule = ({ moduleId = null, onClose, onSuccess }) => {
             name="instructor"
             value={formData.instructor}
             onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             disabled={loading}
           />
         </div>
@@ -254,7 +254,7 @@ const FormModule = ({ moduleId = null, onClose, onSuccess }) => {
             type="text"
             value={topics}
             onChange={handleTopicsChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="Masukkan topik dipisahkan dengan koma (contoh: HTML, CSS, JavaScript)"
             disabled={loading}
           />
@@ -298,7 +298,7 @@ const FormModule = ({ moduleId = null, onClose, onSuccess }) => {
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50"
           >
             {loading ? 'Menyimpan...' : (isEdit ? 'Update' : 'Simpan')}
           </button>

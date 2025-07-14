@@ -294,8 +294,8 @@ function SimulationDetailPage() {
             {/* Info Tanaman dengan Gambar */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Info className="w-6 h-6 text-blue-600" />
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Info className="w-6 h-6 text-green-600" />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900">Info Tanaman</h3>
               </div>
@@ -379,7 +379,7 @@ function SimulationDetailPage() {
                 </div>
 
                 {/* Header dengan Gambar Tanaman */}
-                <div className="flex items-center gap-4 mb-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl">
+                <div className="flex items-center gap-4 mb-6 p-4 bg-gradient-to-r from-green-50 to-green-50 rounded-xl">
                   <div className="w-20 h-20 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
                     <img 
                       src={selectedPlant.image} 
@@ -417,15 +417,15 @@ function SimulationDetailPage() {
                       </div>
                     </div>
 
-                    <div className="p-4 bg-blue-50 rounded-xl">
+                    <div className="p-4 bg-green-50 rounded-xl">
                       <div className="flex items-center gap-2 mb-2">
-                        <Shield className="w-5 h-5 text-blue-600" />
-                        <span className="font-semibold text-blue-800">Resistensi Hama</span>
+                        <Shield className="w-5 h-5 text-green-600" />
+                        <span className="font-semibold text-green-800">Resistensi Hama</span>
                       </div>
-                      <div className="text-2xl font-bold text-blue-600">
+                      <div className="text-2xl font-bold text-green-600">
                         {results.pestResistance}%
                       </div>
-                      <div className="text-sm text-blue-700">
+                      <div className="text-sm text-green-700">
                         Peningkatan signifikan
                       </div>
                     </div>
@@ -531,7 +531,7 @@ function SimulationDetailPage() {
                           </div>
                           <div className="flex items-center gap-4 text-sm mt-1">
                             <span className="text-green-600">+{history.results.yieldIncrease}% hasil</span>
-                            <span className="text-blue-600">{history.results.pestResistance}% resistensi</span>
+                            <span className="text-green-600">{history.results.pestResistance}% resistensi</span>
                             <span className="text-orange-600">{history.results.growthTime} hari</span>
                           </div>
                         </div>

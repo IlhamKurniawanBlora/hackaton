@@ -5,15 +5,15 @@ function PrivacyPolicyPage() {
   const currentDate = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-green-50 to-emerald-50">
       {/* Header dengan gradient background */}
-      <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-blue-600 text-white py-16">
+      <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white py-16">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-center mb-6">
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <Leaf className="w-12 h-12 text-green-200" />
-                <Atom className="w-6 h-6 text-blue-200 absolute -top-1 -right-1" />
+                <Atom className="w-6 h-6 text-green-200 absolute -top-1 -right-1" />
               </div>
               <h1 className="text-4xl md:text-5xl font-bold">AgriNuklir Platform</h1>
             </div>
@@ -63,8 +63,8 @@ function PrivacyPolicyPage() {
                   Informasi yang Anda berikan saat mendaftar, mengisi formulir penelitian pertanian, berpartisipasi dalam forum teknologi nuklir, atau menghubungi tim peneliti kami. Termasuk nama, email, institusi, dan bidang keahlian.
                 </p>
               </div>
-              <div className="bg-blue-50 rounded-xl p-6 border border-blue-200">
-                <h3 className="font-bold text-blue-800 mb-3 flex items-center">
+              <div className="bg-green-50 rounded-xl p-6 border border-green-200">
+                <h3 className="font-bold text-green-800 mb-3 flex items-center">
                   <Atom className="w-5 h-5 mr-2" />
                   Data Penggunaan Otomatis
                 </h3>
@@ -76,9 +76,9 @@ function PrivacyPolicyPage() {
           </div>
 
           {/* Section 2 */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-8 border-l-4 border-blue-500">
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-8 border-l-4 border-green-500">
             <div className="flex items-center space-x-3 mb-6">
-              <Leaf className="w-8 h-8 text-blue-600" />
+              <Leaf className="w-8 h-8 text-green-600" />
               <h2 className="text-2xl font-bold text-gray-800">2. Penggunaan Informasi dalam Penelitian Pertanian</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
@@ -92,8 +92,8 @@ function PrivacyPolicyPage() {
                 "Mengembangkan sistem keamanan radiologi",
                 "Mencegah penyalahgunaan teknologi nuklir"
               ].map((item, index) => (
-                <div key={index} className="flex items-start space-x-3 p-3 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg">
-                  <div className="w-2 h-2 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div key={index} className="flex items-start space-x-3 p-3 bg-gradient-to-r from-green-50 to-green-50 rounded-lg">
+                  <div className="w-2 h-2 bg-gradient-to-r from-green-500 to-green-500 rounded-full mt-2 flex-shrink-0"></div>
                   <p className="text-gray-700 text-sm">{item}</p>
                 </div>
               ))}
@@ -142,7 +142,7 @@ function PrivacyPolicyPage() {
           </div>
 
           {/* Contact Section */}
-          <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl shadow-xl p-8 text-white">
+          <div className="bg-gradient-to-r from-green-600 to-green-600 rounded-2xl shadow-xl p-8 text-white">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-4">Hubungi Tim Keamanan Data</h2>
               <p className="text-green-100 max-w-2xl mx-auto">

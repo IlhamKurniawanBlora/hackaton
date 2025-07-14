@@ -38,7 +38,7 @@ const levelColors = {
 const iconColors = {
   'green': 'text-green-600 bg-green-100',
   'orange': 'text-orange-600 bg-orange-100',
-  'blue': 'text-blue-600 bg-blue-100',
+  'green': 'text-green-600 bg-green-100',
   'purple': 'text-purple-600 bg-purple-100',
 };
 

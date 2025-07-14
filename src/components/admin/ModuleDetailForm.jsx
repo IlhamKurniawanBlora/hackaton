@@ -92,7 +92,7 @@ const ModuleDetailForm = ({
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${
               errors.title ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Masukkan judul detail module"
@@ -110,7 +110,7 @@ const ModuleDetailForm = ({
             value={formData.sequence_order}
             onChange={handleChange}
             min="1"
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${
               errors.sequence_order ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Masukkan urutan detail"
@@ -127,7 +127,7 @@ const ModuleDetailForm = ({
             value={formData.content}
             onChange={handleChange}
             rows="8"
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${
               errors.content ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Masukkan konten detail module"
@@ -147,7 +147,7 @@ const ModuleDetailForm = ({
             type="button"
             onClick={handleSubmit}
             disabled={isLoading}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
           >
             <Save size={16} />
             <span>{isLoading ? 'Menyimpan...' : 'Simpan'}</span>
