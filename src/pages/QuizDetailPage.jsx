@@ -69,7 +69,7 @@ function QuizDetailPage() {
   const goToCertificate = () => {
     // Di sini kita akan mengirim data ke halaman sertifikat
     // Untuk sekarang, kita bisa lewatkan via state atau parameter URL
-    navigate('/certificates', {
+    navigate('/profile', {
         state: {
             certificateData: {
                 name: 'Pengguna AgriNuklir', // Ganti dengan nama pengguna sebenarnya

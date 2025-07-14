@@ -5,6 +5,7 @@ import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 
 import HomePage from '~/pages/HomePage';
+import AboutPage from '~/pages/AboutPage';
 import ModuleListPage from '~/pages/ModuleListPage';
 import ModuleDetailPage from '~/pages/ModuleDetailPage';
 import SimulationPage from '~/pages/SimulationPage';
@@ -37,6 +38,7 @@ export default function App() {
         {/* User routes (protected) */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/modules" element={<ModuleListPage />} />
           <Route path="/modules/:slug" element={<ModuleDetailPage />} />
           <Route path="/simulations" element={<SimulationPage />} />

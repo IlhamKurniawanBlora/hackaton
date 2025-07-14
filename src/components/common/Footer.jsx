@@ -59,9 +59,9 @@ function Footer() {
               <a href="/" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Beranda</a>
               <a href="/modules" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Modul</a>
               <a href="/simulations" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Simulasi</a>
-              <a href="/chatbot" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Chatbot</a>
+              <a href="/" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Chatbot</a>
               <a href="/forum" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Forum</a>
-              <a href="/certificates" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Sertifikat</a>
+              <a href="/profile" className="text-gray-300 hover:text-orange-300 transition-colors duration-300 text-sm py-1 hover:translate-x-1 transform">Sertifikat</a>
             </div>
           </div>
 
@@ -113,7 +113,7 @@ function Footer() {
             <div className="mt-6 pt-4 border-t border-gray-600">
               <div className="flex flex-wrap gap-4 text-sm">
                 <a href="/about" className="text-gray-400 hover:text-emerald-300 transition-colors">Tentang</a>
-                <a href="/faq" className="text-gray-400 hover:text-emerald-300 transition-colors">FAQ</a>
+                <a href="/" className="text-gray-400 hover:text-emerald-300 transition-colors">FAQ</a>
                 <a href="/contact" className="text-gray-400 hover:text-emerald-300 transition-colors">Kontak</a>
                 <a 
                   href="https://www.brin.go.id/" 
