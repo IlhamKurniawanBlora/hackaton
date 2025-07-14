@@ -151,7 +151,7 @@ const { moduleId } = useParams();
   // Navigate to certificate
   const goToCertificate = () => {
     // Navigate to certificate page
-    window.location.href = `/certificates/${moduleId}`;
+    window.location.href = `/certificate/${moduleId}`;
   };
 
   // Loading state

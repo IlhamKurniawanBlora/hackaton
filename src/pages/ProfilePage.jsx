@@ -401,7 +401,6 @@ const CertificationTab = ({ certifications, onRefresh }) => {
                   )}
                 </div>
               </div>
-              {cert.certificate_url && (
                 <div className="mt-3 pt-3 border-t">
                   <a
                     href={`certificate/${cert.module_id}`}
@@ -412,7 +411,6 @@ const CertificationTab = ({ certifications, onRefresh }) => {
                     Lihat Sertifikat →
                   </a>
                 </div>
-              )}
             </div>
           ))}
         </div>
