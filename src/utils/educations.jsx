@@ -149,7 +149,7 @@ export const createCertification = async (userId, moduleId, quizId, userName, sc
         certificate_number: certificateNumber,
         user_name: userName,
         score,
-        certificate_url: 'certificates' + certificateNumber + '.pdf' 
+        certificate_url: '/certificates/' + certificateNumber + '.pdf' 
       })
       .select()
       .single();
