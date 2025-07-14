@@ -126,7 +126,7 @@ export const adminModuleService = {
   /**
    * Create atau Update module (Upsert)
    */
-  async createOrUpdateModule(moduleData, imageFile = null) {
+  async createOrUpdateModule(moduleData, imageFile) {
     try {
       // Pastikan user authenticated
       const { user } = await authService.getCurrentUser();
@@ -153,8 +153,8 @@ export const adminModuleService = {
       // Jika ada file image yang diupload
       if (imageFile) {
         // Untuk update, hapus image lama jika ada
-        if (isUpdate && moduleData.image_path) {
-          await this.deleteModuleImage(moduleData.image_path);
+        if (isUpdate && moduleData.image_url) {
+          await this.deleteModuleImage(moduleData.image_url);
         }
 
         // Gunakan moduleId jika update, jika create gunakan id sementara
@@ -165,7 +165,7 @@ export const adminModuleService = {
 
         if (uploadResult.success) {
           preparedData.image_url = uploadResult.data.publicUrl;
-          preparedData.image_path = uploadResult.data.path;
+          preparedData.image_url = uploadResult.data.path;
         } else {
           // Jika gagal upload image, return error
           return { success: false, error: uploadResult.error };
@@ -188,15 +188,15 @@ export const adminModuleService = {
       // rename folder dari temp ke ID asli
       if (!isUpdate && imageFile && data.id) {
         const tempModuleId = `temp-${Date.now()}`;
-        if (preparedData.image_path && preparedData.image_path.includes(tempModuleId)) {
+        if (preparedData.image_url && preparedData.image_url.includes(tempModuleId)) {
           // Update path dengan ID yang benar
-          const newImagePath = preparedData.image_path.replace(tempModuleId, data.id);
+          const newImagePath = preparedData.image_url.replace(tempModuleId, data.id);
           
           // Update record dengan path yang benar
           await supabase
             .from('modules')
             .update({ 
-              image_path: newImagePath,
+              image_url: newImagePath,
               image_url: preparedData.image_url.replace(tempModuleId, data.id)
             })
             .eq('id', data.id);
@@ -216,13 +216,13 @@ export const adminModuleService = {
     try {
       const { data: moduleData } = await supabase
         .from('modules')
-        .select('image_path')
+        .select('image_url')
         .eq('id', id)
         .single();
 
       // Hapus image dari storage jika ada
-      if (moduleData?.image_path) {
-        await this.deleteModuleImage(moduleData.image_path);
+      if (moduleData?.image_url) {
+        await this.deleteModuleImage(moduleData.image_url);
       }
 
       const { error } = await supabase
