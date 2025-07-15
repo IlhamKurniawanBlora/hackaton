@@ -103,7 +103,7 @@ function Footer() {
               <div className="flex flex-wrap gap-4 text-sm">
                 <a href="/about" className="text-gray-400 hover:text-emerald-300 transition-colors">Tentang</a>
                 <a href="/" className="text-gray-400 hover:text-emerald-300 transition-colors">FAQ</a>
-                <a href="/contact" className="text-gray-400 hover:text-emerald-300 transition-colors">Kontak</a>
+                <a href="/" className="text-gray-400 hover:text-emerald-300 transition-colors">Kontak</a>
                 <a 
                   href="https://www.brin.go.id/" 
                   target="_blank" 

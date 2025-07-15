@@ -226,7 +226,7 @@ const CertificatePage = () => {
   // Error state
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 flex items-center justify-center pt-24">
         <div className="text-center max-w-md">
           <Award className="h-16 w-16 text-gray-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Sertifikat Tidak Ditemukan</h2>
@@ -243,7 +243,7 @@ const CertificatePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 py-8 pt-24">
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8">

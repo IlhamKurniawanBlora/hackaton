@@ -3,7 +3,7 @@ import React from 'react';
 
 function AboutPage() {
   return (
-    <div className="container mx-auto p-8 py-12 min-h-[calc(100vh-160px)]">
+    <div className="container mx-auto p-8 py-12 min-h-[calc(100vh-160px)] pt-24">
       <h1 className="text-4xl font-bold text-center text-gray-900 mb-8 font-heading">Tentang AgriNuklir Platform</h1>
 
       <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-4xl mx-auto"> {/* Lebih melengkung dan bayangan lebih kuat */}

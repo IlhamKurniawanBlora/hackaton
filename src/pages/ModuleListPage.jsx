@@ -185,7 +185,7 @@ function ModulesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 via-white to-green-50">
+    <div className="min-h-screen bg-gradient-to-b from-green-50 via-white to-green-50 pt-24">
       <div className="container mx-auto px-4 py-12">
         {/* Header Section */}
         <div className="text-center mb-16">

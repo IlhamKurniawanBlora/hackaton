@@ -30,7 +30,7 @@ function FAQPage() {
   ];
 
   return (
-    <div className="container mx-auto p-8 py-12 min-h-[calc(100vh-160px)]">
+    <div className="container mx-auto p-8 py-12 min-h-[calc(100vh-160px)] pt-24">
       <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Pertanyaan yang Sering Diajukan (FAQ)</h1>
 
       <div className="bg-white rounded-lg shadow-xl p-8 max-w-3xl mx-auto">

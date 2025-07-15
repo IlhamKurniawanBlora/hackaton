@@ -228,7 +228,7 @@ function ModuleDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-24">
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4">
@@ -242,7 +242,7 @@ function ModuleDetailPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 ">
         {/* Module Info */}
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
           <div className="md:flex">

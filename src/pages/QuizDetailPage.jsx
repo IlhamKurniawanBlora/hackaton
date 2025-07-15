@@ -82,7 +82,7 @@ function QuizDetailPage() {
   };
 
   return (
-    <div className="module-detail-page container py-8 min-h-content">
+    <div className="module-detail-page container py-8 min-h-content pt-24">
       <Link to="/modules" className="back-link">
         <ArrowLeftIcon className="back-link-icon" /> Kembali ke Daftar Modul
       </Link>

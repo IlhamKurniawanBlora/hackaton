@@ -159,7 +159,7 @@ function SimulationDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-orange-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-orange-50 pt-24">
       {/* Header */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">

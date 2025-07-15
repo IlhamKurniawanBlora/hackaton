@@ -125,7 +125,7 @@ const EducationModulePage = () => {
 
     if (!module || !moduleDetails.length) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 flex items-center justify-center pt-24">
                 <div className="text-center bg-white rounded-xl shadow-xl p-8 max-w-md">
                     <BookOpen className="w-16 h-16 text-red-600 mx-auto mb-4" />
                     <h2 className="text-2xl font-bold text-gray-800 mb-2">Module Not Found</h2>
@@ -139,7 +139,7 @@ const EducationModulePage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 to-indigo-100 pt-24">
             {/* Header */}
             <header className="bg-white shadow-lg sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -3,7 +3,7 @@ import { Home, Search, ArrowLeft, Leaf, Atom, AlertTriangle, Zap } from 'lucide-
 
 function NotFoundPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-green-50 to-emerald-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-green-50 to-emerald-50 flex items-center justify-center p-6 pt-24">
       <div className="max-w-4xl mx-auto text-center">
         
         {/* Animated 404 Section */}

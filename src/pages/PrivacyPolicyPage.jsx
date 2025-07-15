@@ -5,7 +5,7 @@ function PrivacyPolicyPage() {
   const currentDate = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-green-50 to-emerald-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-green-50 to-emerald-50 pt-24">
       {/* Header dengan gradient background */}
       <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white py-16">
         <div className="container mx-auto px-6">
