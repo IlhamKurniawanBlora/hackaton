@@ -163,14 +163,14 @@ const AgriNuclearChatbot = () => {
         <button
           onClick={() => setIsOpen(true)}
           className="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 group"
-          aria-label="Buka chatbot agri-nuklir"
+          aria-label="Buka chatbot agrinuklir"
         >
           <div className="relative">
             <MessageCircle size={24} />
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 rounded-full animate-pulse"></div>
           </div>
           <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-            Tanya tentang Agri-Nuklir
+            Tanya tentang Agri Nuklir
           </div>
         </button>
       )}
@@ -183,12 +183,19 @@ const AgriNuclearChatbot = () => {
           {/* Header */}
           <div className="bg-gradient-to-r from-emerald-500 to-green-600 text-white p-4 flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="p-2 bg-white/20 rounded-full">
-                <Leaf size={20} />
+              <div className="flex items-center space-x-1 hover:opacity-90 transition-opacity">
+                
+              <div className="w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center border border-gray-100">
+                <img
+                  src="/icon.png"
+                  alt="AgriNuklir Logo"
+                  className="w-8 h-8 object-contain"
+                />
+              </div>
               </div>
               <div>
-                <h3 className="font-semibold">Agri-Nuclear AI</h3>
-                <p className="text-xs text-emerald-100">Asisten Teknologi Nuklir</p>
+                <h3 className="font-semibold">Agri Nuclear Chatbot</h3>
+                <p className="text-xs text-emerald-100">Asisten AI </p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -317,7 +324,7 @@ const AgriNuclearChatbot = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(e)}
-                placeholder="Tanya tentang teknologi agri-nuklir..."
+                placeholder="Tanya tentang teknologi agri nuklir..."
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
                 disabled={isLoading}
               />

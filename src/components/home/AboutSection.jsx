@@ -33,14 +33,23 @@ function AboutSection() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-           <div className="mb-8 animate-fade-in-down">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-2xl mb-6 transform rotate-12 hover:rotate-0 transition-transform duration-500 overflow-hidden">
-              <img
-                src="/icon.png"
-                alt="AgriNuklir Logo"
-                className="w-20 h-20 object-contain"
-              />
-            </div>
+           <div className="mb-8 animate-fade-in-down gap-2 flex items-center justify-center">
+              <div className="inline-flex items-center justify-center w-24 h-24  rounded-2xl shadow-2xl mb-6 bg-white overflow-hidden">
+                <img
+                  src="/unu/icon.png"
+                  alt="UNU Jogja Logo"
+                  className="w-20 h-20 object-contain"
+                />
+              </div>
+
+              <div className="inline-flex items-center justify-center w-24 h-24  rounded-2xl shadow-2xl mb-6 bg-white overflow-hidden">
+                <img
+                  src="/icon.png"
+                  alt="AgriNuklir Logo"
+                  className="w-20 h-20 object-contain"
+                />
+              </div>
+              
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-emerald-700">Tentang </span>
@@ -48,8 +57,9 @@ function AboutSection() {
           </h2>
           <div className="max-w-4xl mx-auto">
             <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
-              Platform pembelajaran digital terdepan yang menggabungkan teknologi nuklir dengan inovasi pertanian modern
-            </p>
+  Platform pembelajaran digital terdepan yang menggabungkan teknologi nuklir dengan inovasi pertanian modern untuk meningkatkan produktivitas dan keberlanjutan. Dikembangkan dengan semangat kolaborasi, nilai-nilai keilmuan, dan visi pengabdian kepada masyarakat khas <strong>Universitas Nahdlatul Ulama Yogyakarta</strong>, platform ini menjadi jembatan menuju masa depan pertanian yang lebih cerdas, inklusif, dan berdaya saing global.
+</p>
+
             <div className="grid md:grid-cols-3 gap-8 text-left">
               <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-emerald-100">
                 <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center mb-4">
